@@ -1,0 +1,1 @@
+FuturesUnordered<(&std::string::String, impl futures::Future<Output = Result<std::string::String, reqwest::Error>>)>
