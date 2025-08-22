@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/modules/syndication/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dwsyn="http://rss.dw.com/syndication/dwsyn/">
+ <channel rdf:about="https://rss.dw.com/syndication/feeds/rss-en-cul.2090.rdf">
+  <description>Deutsche Welle: DW.com - Germany</description>
+  <link>https://www.dw.com/s-1441?maca=en-rss-en-cul-2090-rdf</link>
+  <title>Deutsche Welle: DW.com - Culture &amp; Lifestyle</title>
+  <sy:updatePeriod>hourly</sy:updatePeriod>
+  <sy:updateFequency>4</sy:updateFequency>
+  <sy:updateBase>2002-05-01T00:00:00Z</sy:updateBase>
+  <dc:date>2025-08-22T20:14:59Z</dc:date>
+  <image rdf:resource="https://rss.dw.com/images/DW-L-RGB_whitebg.png"/>
+  <items>
+   <rdf:Seq>
+    <rdf:li rdf:resource="https://www.dw.com/en/gamescom-how-is-poland-s-games-industry-faring/a-73730347?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/retro-games-why-pixel-graphics-won-t-go-out-of-fashion/a-67887797?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/lil-nas-x-arrested-after-being-found-nearly-naked-in-la/a-73726644?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/ghana-singer-shatta-wale-granted-bail-in-lamborghini-probe/a-73722417?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/berlin-racist-street-name-change-stopped-again/a-73280857?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/japan-grapples-with-its-past-80-years-after-world-war-ii/a-73654758?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/what-does-birth-control-pill-have-to-do-with-auschwitz/a-73641627?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/hans-christian-andersen-s-timeless-legacy/a-73501169?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/sound-of-falling-is-germany-s-entry-for-the-oscars/a-73720902?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/germany-s-strangest-laws-why-dancing-can-get-you-fined/a-73608011?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/afghan-youth-orchestra-in-exile-resistance-against-the-taliban/a-73655000?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/how-bollywood-s-lens-on-kashmir-has-changed/a-73569563?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/taiwan-imagines-a-chinese-invasion-with-tv-and-games/a-73557405?maca=en-rss-en-cul-2090-rdf"/>
+    <rdf:li rdf:resource="https://www.dw.com/en/who-was-thong-inventor-rudi-gernreich/a-73656347?maca=en-rss-en-cul-2090-rdf"/>
+   </rdf:Seq>
+  </items>
+ </channel>
+ <image rdf:about="https://rss.dw.com/images/DW-L-RGB_whitebg.png">
+  <url>https://rss.dw.com/images/DW-L-RGB_whitebg.png</url>
+  <link>https://www.dw.com/s-1441?maca=en-rss-en-cul-2090-rdf</link>
+  <title>DW</title>
+  <description>News, Analysis and Service from Germany and Europe - in 30 Languages</description>
+ </image>
+ <item rdf:about="https://www.dw.com/en/gamescom-how-is-poland-s-games-industry-faring/a-73730347?maca=en-rss-en-cul-2090-rdf">
+  <title>Gamescom: How is Poland&apos;s games industry faring?</title>
+  <link>https://www.dw.com/en/gamescom-how-is-poland-s-games-industry-faring/a-73730347?maca=en-rss-en-cul-2090-rdf</link>
+  <description>While the number of people attending the international video games fair in Cologne shows that the industry is not in crisis, it&apos;s still fighting many battles. These impact the extremely creative Polish games industry.</description>
+  <dc:date>2025-08-22T13:11:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73730347</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/retro-games-why-pixel-graphics-won-t-go-out-of-fashion/a-67887797?maca=en-rss-en-cul-2090-rdf">
+  <title>Retro games: Why pixel graphics won&apos;t go out of fashion</title>
+  <link>https://www.dw.com/en/retro-games-why-pixel-graphics-won-t-go-out-of-fashion/a-67887797?maca=en-rss-en-cul-2090-rdf</link>
+  <description>Games with pixel graphics are striking a chord with gamers, making older players nostalgic and giving younger players an insight into video game history.</description>
+  <dc:date>2024-01-10T08:15:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>67887797</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/lil-nas-x-arrested-after-being-found-nearly-naked-in-la/a-73726644?maca=en-rss-en-cul-2090-rdf">
+  <title>Lil Nas X arrested after being found nearly naked in LA</title>
+  <link>https://www.dw.com/en/lil-nas-x-arrested-after-being-found-nearly-naked-in-la/a-73726644?maca=en-rss-en-cul-2090-rdf</link>
+  <description>The Grammy Award-winning rapper was taken to hospital for a suspected overdose after a brief struggle with police. He was held in jail and booked on suspicion of obstructing an officer.</description>
+  <dc:date>2025-08-22T02:54:00Z</dc:date>
+  <dc:subject>News</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73726644</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/ghana-singer-shatta-wale-granted-bail-in-lamborghini-probe/a-73722417?maca=en-rss-en-cul-2090-rdf">
+  <title>Ghana: Singer Shatta Wale granted bail in Lamborghini probe</title>
+  <link>https://www.dw.com/en/ghana-singer-shatta-wale-granted-bail-in-lamborghini-probe/a-73722417?maca=en-rss-en-cul-2090-rdf</link>
+  <description>The dancehall music star was interrogated as Ghanaian officials pursue a major fraud crackdown in cooperation with the US. Wale&apos;s lawyers say the singer was not aware of any criminal links when buying the Lamborghini.</description>
+  <dc:date>2025-08-21T16:21:00Z</dc:date>
+  <dc:subject>News</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73722417</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/berlin-racist-street-name-change-stopped-again/a-73280857?maca=en-rss-en-cul-2090-rdf">
+  <title>Berlin: Racist street name change stopped again</title>
+  <link>https://www.dw.com/en/berlin-racist-street-name-change-stopped-again/a-73280857?maca=en-rss-en-cul-2090-rdf</link>
+  <description>The renaming of a Berlin boulevard to Anton-Wilhelm-Amo-Strasse, after Germany&apos;s first African-born scholar, has been blocked again. The long struggle to erase symbols of a brutal colonial past continues.</description>
+  <dc:date>2025-08-22T09:36:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73280857</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/japan-grapples-with-its-past-80-years-after-world-war-ii/a-73654758?maca=en-rss-en-cul-2090-rdf">
+  <title>Japan grapples with its past 80 years after World War II</title>
+  <link>https://www.dw.com/en/japan-grapples-with-its-past-80-years-after-world-war-ii/a-73654758?maca=en-rss-en-cul-2090-rdf</link>
+  <description>Right-wing groups in Japan continue to push historical denialism in a bid to whitewash wartime atrocities. South Korea, which suffered under Japanese occupation, wants Japan to be more open about the past.</description>
+  <dc:date>2025-08-15T13:30:00Z</dc:date>
+  <dc:subject>World</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73654758</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/what-does-birth-control-pill-have-to-do-with-auschwitz/a-73641627?maca=en-rss-en-cul-2090-rdf">
+  <title>What does birth control pill have to do with Auschwitz?</title>
+  <link>https://www.dw.com/en/what-does-birth-control-pill-have-to-do-with-auschwitz/a-73641627?maca=en-rss-en-cul-2090-rdf</link>
+  <description>When the birth control pill was introduced in 1960, women had a new kind of freedom. But the foundations were laid by a Nazi gynecologist who brutally sterilized female prisoners in Auschwitz.</description>
+  <dc:date>2025-08-14T14:59:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73641627</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/hans-christian-andersen-s-timeless-legacy/a-73501169?maca=en-rss-en-cul-2090-rdf">
+  <title>Hans Christian Andersen&apos;s timeless legacy</title>
+  <link>https://www.dw.com/en/hans-christian-andersen-s-timeless-legacy/a-73501169?maca=en-rss-en-cul-2090-rdf</link>
+  <description>The prolific Danish writer Hans Christian Andersen died 150 years ago, yet fairy tales like &quot;The Little Mermaid&quot; and &quot;The Ugly Duckling&quot; still move readers to this day.</description>
+  <dc:date>2025-08-01T15:44:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73501169</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/sound-of-falling-is-germany-s-entry-for-the-oscars/a-73720902?maca=en-rss-en-cul-2090-rdf">
+  <title>&apos;Sound of Falling&apos; is Germany&apos;s entry for the Oscars</title>
+  <link>https://www.dw.com/en/sound-of-falling-is-germany-s-entry-for-the-oscars/a-73720902?maca=en-rss-en-cul-2090-rdf</link>
+  <description>The Cannes Jury Prize-winning drama by Mascha Schilinski will represent Germany in the best international feature film category.</description>
+  <dc:date>2025-08-21T15:00:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73720902</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/germany-s-strangest-laws-why-dancing-can-get-you-fined/a-73608011?maca=en-rss-en-cul-2090-rdf">
+  <title>Germany&apos;s strangest laws: Why dancing can get you fined</title>
+  <link>https://www.dw.com/en/germany-s-strangest-laws-why-dancing-can-get-you-fined/a-73608011?maca=en-rss-en-cul-2090-rdf</link>
+  <description>From dance and movie bans on religious holidays to prohibitions on sandcastle building on Baltic beaches, Germany has some bizarre regulations.</description>
+  <dc:date>2025-08-12T11:09:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73608011</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/afghan-youth-orchestra-in-exile-resistance-against-the-taliban/a-73655000?maca=en-rss-en-cul-2090-rdf">
+  <title>Afghan Youth Orchestra in exile: Resistance against the Taliban</title>
+  <link>https://www.dw.com/en/afghan-youth-orchestra-in-exile-resistance-against-the-taliban/a-73655000?maca=en-rss-en-cul-2090-rdf</link>
+  <description>Music is banned at home. But after fleeing the Taliban into exile, the Afghan Youth Orchestra is performing in Europe about loss, hope, and the power of music.</description>
+  <dc:date>2025-08-15T12:52:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73655000</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/how-bollywood-s-lens-on-kashmir-has-changed/a-73569563?maca=en-rss-en-cul-2090-rdf">
+  <title>How Bollywood&apos;s lens on Kashmir has changed</title>
+  <link>https://www.dw.com/en/how-bollywood-s-lens-on-kashmir-has-changed/a-73569563?maca=en-rss-en-cul-2090-rdf</link>
+  <description>Bollywood once framed Kashmir through a lens of nostalgia and beauty. Now, the same landscapes carry complex stories of resilience, conflict and cultural memory.</description>
+  <dc:date>2025-08-09T18:28:00Z</dc:date>
+  <dc:subject>World</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73569563</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/taiwan-imagines-a-chinese-invasion-with-tv-and-games/a-73557405?maca=en-rss-en-cul-2090-rdf">
+  <title>Taiwan imagines a Chinese invasion with TV and games</title>
+  <link>https://www.dw.com/en/taiwan-imagines-a-chinese-invasion-with-tv-and-games/a-73557405?maca=en-rss-en-cul-2090-rdf</link>
+  <description>Taiwanese creatives are creating fictional, yet plausible, depictions of a Chinese invasion. Some say the imaginary scenarios are helpful, others say they only create fear.</description>
+  <dc:date>2025-08-07T10:48:00Z</dc:date>
+  <dc:subject>World</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73557405</dwsyn:contentID>
+ </item>
+ <item rdf:about="https://www.dw.com/en/who-was-thong-inventor-rudi-gernreich/a-73656347?maca=en-rss-en-cul-2090-rdf">
+  <title>Who was thong inventor Rudi Gernreich?</title>
+  <link>https://www.dw.com/en/who-was-thong-inventor-rudi-gernreich/a-73656347?maca=en-rss-en-cul-2090-rdf</link>
+  <description>The thong was created as a political statement by Austrian-born designer Rudi Gernreich, who didn&apos;t want to sexualize the body, but liberate it.</description>
+  <dc:date>2025-08-19T12:25:00Z</dc:date>
+  <dc:subject>Culture</dc:subject>
+  <dc:language>en</dc:language>
+  <dwsyn:contentID>73656347</dwsyn:contentID>
+ </item>
+</rdf:RDF>
