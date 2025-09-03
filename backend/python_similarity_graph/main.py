@@ -28,8 +28,15 @@ def main():
 
     model = SentenceTransformer("all-MiniLM-L6-v2")
     contents = [a.content for a in article_data]
-    ids = [a.url for a in article_data]
     embeddings = model.encode(contents, normalize_embeddings=True)
+
+    idToArticle = {}
+    for a in article_data:
+        idToArticle[a.url] = a
+
+    graph = Graph(embeddings, article_data, 0.8)
+    graph.compute_edges()
+    graph.cluster()
 
 
 
