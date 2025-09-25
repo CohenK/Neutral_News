@@ -1,123 +1,11 @@
 use std::fs::create_dir_all;
-use std::hash::Hash;
 use sha2::{Digest, Sha256};
 use url::Url;
 use serde_json::json;
-use chrono::{NaiveDate, DateTime, Utc, Duration};
-use select::document::Document;
-use select::predicate::{Attr, Name};
-use regex::Regex;
-use scraper::{Html, Selector};
-use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use futures::stream::{FuturesUnordered, StreamExt};
 use xmltree::Element;
 use std::collections::HashSet;
-
-pub fn extract_head_as_headers(html: &str) -> HeaderMap {
-    let mut headers = HeaderMap::new();
-    let document = Html::parse_document(html);
-    let meta_selector = Selector::parse("meta").unwrap();
-
-    for meta in document.select(&meta_selector) {
-        let key_opt = meta.value().attr("name").or_else(|| meta.value().attr("property"));
-        let value_opt = meta.value().attr("content");
-
-        if let (Some(key), Some(value)) = (key_opt, value_opt) {
-            if let (Ok(header_name), Ok(header_value)) = (
-                HeaderName::from_bytes(key.as_bytes()),
-                HeaderValue::from_str(value),
-            ) {
-                headers.insert(header_name, header_value);
-            }
-        }
-    }
-
-    headers
-}
-
-fn extract_from_meta(html: &str) -> Option<NaiveDate> {
-    let doc = Document::from(html);
-
-    let selectors = [
-        ("property", "article:published_time"),
-        ("name", "pubdate"),
-        ("name", "date"),
-        ("name", "publish-date"),
-    ];
-
-    for (attr_name, value) in selectors {
-        if let Some(node) = doc.find(Attr(attr_name, value)).next() {
-            if let Some(content) = node.attr("content") {
-                if let Ok(date) = parse_date(content) {
-                    return Some(date);
-                }
-            }
-        }
-    }
-
-    for node in doc.find(Name("time")) {
-        if let Some(dt) = node.attr("datetime") {
-            if let Ok(date) = parse_date(dt) {
-                return Some(date);
-            }
-        }
-    }
-
-    None
-}
-
-fn extract_from_json_ld(html: &str) -> Option<NaiveDate> {
-    let start_tag = "<script type=\"application/ld+json\">";
-    let end_tag = "</script>";
-
-    for segment in html.split(start_tag).skip(1) {
-        if let Some(json_text) = segment.split(end_tag).next() {
-            if let Ok(value) = serde_json::from_str::<serde_json::Value>(json_text) {
-                if let Some(date_str) = value.get("datePublished").and_then(|v| v.as_str()) {
-                    if let Ok(date) = parse_date(date_str) {
-                        return Some(date);
-                    }
-                }
-            }
-        }
-    }
-
-    None
-}
-
-fn extract_date_from_url(url: &str) -> Option<NaiveDate> {
-    let re = Regex::new(r"/(\d{4})/(\d{2})/(\d{2})").ok()?;
-    let caps = re.captures(url)?;
-    let year = caps.get(1)?.as_str().parse().ok()?;
-    let month = caps.get(2)?.as_str().parse().ok()?;
-    let day = caps.get(3)?.as_str().parse().ok()?;
-    NaiveDate::from_ymd_opt(year, month, day)
-}
-
-fn extract_from_last_modified(headers: &reqwest::header::HeaderMap) -> Option<NaiveDate> {
-    headers.get("Last-Modified")
-        .and_then(|val| val.to_str().ok())
-        .and_then(|s| DateTime::parse_from_rfc2822(s).ok())
-        .map(|dt| dt.naive_utc().date())
-}
-
-fn parse_date(input: &str) -> Result<NaiveDate, chrono::ParseError> {
-    DateTime::parse_from_rfc3339(input)
-        .map(|dt| dt.naive_utc().date())
-}
-
-pub fn extract_date(html: &str, url: &str, headers: &HeaderMap) -> Option<NaiveDate> {
-    extract_from_meta(html)
-        .or_else(|| extract_from_json_ld(html))
-        .or_else(|| extract_date_from_url(url))
-        .or_else(|| extract_from_last_modified(headers))
-}
-
-pub fn is_recent(date: NaiveDate) -> bool {
-    let today = Utc::now().date_naive();
-    let yesterday = today - Duration::days(1);
-    date == today || date == yesterday
-}
+use reqwest::Client;
 
 pub fn is_valid_article_link(url: &String, ignore:&Vec<String>) -> bool {
     let blacklist = [
@@ -127,7 +15,11 @@ pub fn is_valid_article_link(url: &String, ignore:&Vec<String>) -> bool {
     ];
 
     let bad_keywords = [
-        "newsletter", "newsletters", "subscribe", "privacy", "privacy-statement",
+        r#"/terms"#, r#"/privacy"#, r#"/about"#, r#"/contact"#, r#"/help"#,
+        r#"/press-releases"#, r#"/hub/"#, r#"/spotlight/"#, r#"/podcast"#,
+        r#"/video/"#, r#"/photo/"#, r#"/year-in-photos"#, r#"/newsletters"#,
+        r#"/advertising"#, r#"/brand"#, r#"/follow-us"#,
+        r#"/subscribe"#, "privacy", "privacy-statement",
         "privacystatement", "terms", "cookies", "about", "contact", "signup", 
         "register", "advert", "ads", "careers", "jobs", "login", "logout",
         "appstore", "playstore", "download", "quizzes", "myaccount",
@@ -227,6 +119,7 @@ pub fn save_data(url: &str, title: &str, content: &str, directory: &str) -> std:
 }
 
 pub fn parse_html(body: String)->(String, String){
+    // given an html body string get the title and contents
     let document = scraper::Html::parse_document(&body);
     let title_selector = scraper::Selector::parse("title").unwrap();
     let p_selector = scraper::Selector::parse("p").unwrap();
@@ -308,6 +201,7 @@ pub fn setup_logger() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+// used for RSS
 pub fn extract_item_links(list: &Element) -> Vec<String>{
     let items: Vec<&Element> = list.
         children.
@@ -324,4 +218,44 @@ pub fn extract_item_links(list: &Element) -> Vec<String>{
                 .map(|text| text.to_string())
         }).collect();
     links
+}
+
+pub async fn extract_article_links(client: &Client, base: &str)-> Vec<String>{
+    // regex expression for filtering out non article links
+    let allow = regex::Regex::new(r#"^https?://(www\.)?apnews\.com(/[\w-]{2})?/article/[^?#]+"#).unwrap();
+
+    let mut result = Vec::new();
+    let response = match client.get(base).send().await{
+        Ok(resp) => resp,
+        Err(e) => {
+            log::warn!("Failed to fetch {}: {}", base, e);
+            return result
+        }
+    };
+    let body = match response.text().await{
+        Ok(text) => text,
+        Err(e) => {
+            log::warn!("Failed to read body {}: {}", base, e);
+            return result
+        }
+    };
+    let document = scraper::Html::parse_document(&body);
+    let current_base = match Url::parse(base) {
+        Ok(base) => base,
+        Err(_) => return result,
+    };
+    // extract the links inside of a webpage
+    let link_selector = scraper::Selector::parse("a").unwrap();
+    for el in document.select(&link_selector) {
+        if let Some(href) = el.value().attr("href") {
+            if let Ok(link) = current_base.join(href) {
+                let link_str = link.to_string();
+                if allow.is_match(&link_str){
+                    log::info!("Discovered link: {}", link_str);
+                    result.push(link_str);
+                }
+            }
+        }
+    }
+    result
 }

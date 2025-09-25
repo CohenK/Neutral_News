@@ -115,6 +115,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1b8e56985ec62d17e9c1001dc89c88ecd7dc08e47eba5ec7c29c7b5eeecde967"
 
 [[package]]
+name = "bk-tree"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a8283fb8e64b873918f8bc527efa6aff34956296e48ea750a9c909cd47c01546"
+dependencies = [
+ "fnv",
+ "triple_accel",
+]
+
+[[package]]
 name = "block-buffer"
 version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1666,6 +1676,7 @@ checksum = "bbc52377db80e3fec3a2c748ca603b8b6cacdd34ff89ff4b742a635361d4b4a7"
 name = "rust_article_fetcher"
 version = "0.1.0"
 dependencies = [
+ "bk-tree",
  "chrono",
  "feed-rs",
  "fern",
@@ -1679,6 +1690,7 @@ dependencies = [
  "serde_json",
  "sha2",
  "tokio",
+ "unicode-segmentation",
  "url",
  "xmltree",
 ]
@@ -2283,6 +2295,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "triple_accel"
+version = "0.3.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "622b09ce2fe2df4618636fb92176d205662f59803f39e70d1c333393082de96c"
+
+[[package]]
 name = "try-lock"
 version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2299,6 +2317,12 @@ name = "unicode-ident"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a5f39404a5da50712a4c1eecf25e90dd62b613502b7e925fd4e4d19b5c96512"
+
+[[package]]
+name = "unicode-segmentation"
+version = "1.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f6ccf251212114b54433ec949fd6a7841275f9ada20dddd2f29e9ceea4501493"
 
 [[package]]
 name = "unicode-width"

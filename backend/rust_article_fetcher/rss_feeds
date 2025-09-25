@@ -1,163 +1,274 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/modules/syndication/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dwsyn="http://rss.dw.com/syndication/dwsyn/">
- <channel rdf:about="https://rss.dw.com/syndication/feeds/rss-en-cul.2090.rdf">
-  <description>Deutsche Welle: DW.com - Germany</description>
-  <link>https://www.dw.com/s-1441?maca=en-rss-en-cul-2090-rdf</link>
-  <title>Deutsche Welle: DW.com - Culture &amp; Lifestyle</title>
-  <sy:updatePeriod>hourly</sy:updatePeriod>
-  <sy:updateFequency>4</sy:updateFequency>
-  <sy:updateBase>2002-05-01T00:00:00Z</sy:updateBase>
-  <dc:date>2025-08-22T20:14:59Z</dc:date>
-  <image rdf:resource="https://rss.dw.com/images/DW-L-RGB_whitebg.png"/>
-  <items>
-   <rdf:Seq>
-    <rdf:li rdf:resource="https://www.dw.com/en/gamescom-how-is-poland-s-games-industry-faring/a-73730347?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/retro-games-why-pixel-graphics-won-t-go-out-of-fashion/a-67887797?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/lil-nas-x-arrested-after-being-found-nearly-naked-in-la/a-73726644?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/ghana-singer-shatta-wale-granted-bail-in-lamborghini-probe/a-73722417?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/berlin-racist-street-name-change-stopped-again/a-73280857?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/japan-grapples-with-its-past-80-years-after-world-war-ii/a-73654758?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/what-does-birth-control-pill-have-to-do-with-auschwitz/a-73641627?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/hans-christian-andersen-s-timeless-legacy/a-73501169?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/sound-of-falling-is-germany-s-entry-for-the-oscars/a-73720902?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/germany-s-strangest-laws-why-dancing-can-get-you-fined/a-73608011?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/afghan-youth-orchestra-in-exile-resistance-against-the-taliban/a-73655000?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/how-bollywood-s-lens-on-kashmir-has-changed/a-73569563?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/taiwan-imagines-a-chinese-invasion-with-tv-and-games/a-73557405?maca=en-rss-en-cul-2090-rdf"/>
-    <rdf:li rdf:resource="https://www.dw.com/en/who-was-thong-inventor-rudi-gernreich/a-73656347?maca=en-rss-en-cul-2090-rdf"/>
-   </rdf:Seq>
-  </items>
- </channel>
- <image rdf:about="https://rss.dw.com/images/DW-L-RGB_whitebg.png">
-  <url>https://rss.dw.com/images/DW-L-RGB_whitebg.png</url>
-  <link>https://www.dw.com/s-1441?maca=en-rss-en-cul-2090-rdf</link>
-  <title>DW</title>
-  <description>News, Analysis and Service from Germany and Europe - in 30 Languages</description>
- </image>
- <item rdf:about="https://www.dw.com/en/gamescom-how-is-poland-s-games-industry-faring/a-73730347?maca=en-rss-en-cul-2090-rdf">
-  <title>Gamescom: How is Poland&apos;s games industry faring?</title>
-  <link>https://www.dw.com/en/gamescom-how-is-poland-s-games-industry-faring/a-73730347?maca=en-rss-en-cul-2090-rdf</link>
-  <description>While the number of people attending the international video games fair in Cologne shows that the industry is not in crisis, it&apos;s still fighting many battles. These impact the extremely creative Polish games industry.</description>
-  <dc:date>2025-08-22T13:11:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73730347</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/retro-games-why-pixel-graphics-won-t-go-out-of-fashion/a-67887797?maca=en-rss-en-cul-2090-rdf">
-  <title>Retro games: Why pixel graphics won&apos;t go out of fashion</title>
-  <link>https://www.dw.com/en/retro-games-why-pixel-graphics-won-t-go-out-of-fashion/a-67887797?maca=en-rss-en-cul-2090-rdf</link>
-  <description>Games with pixel graphics are striking a chord with gamers, making older players nostalgic and giving younger players an insight into video game history.</description>
-  <dc:date>2024-01-10T08:15:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>67887797</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/lil-nas-x-arrested-after-being-found-nearly-naked-in-la/a-73726644?maca=en-rss-en-cul-2090-rdf">
-  <title>Lil Nas X arrested after being found nearly naked in LA</title>
-  <link>https://www.dw.com/en/lil-nas-x-arrested-after-being-found-nearly-naked-in-la/a-73726644?maca=en-rss-en-cul-2090-rdf</link>
-  <description>The Grammy Award-winning rapper was taken to hospital for a suspected overdose after a brief struggle with police. He was held in jail and booked on suspicion of obstructing an officer.</description>
-  <dc:date>2025-08-22T02:54:00Z</dc:date>
-  <dc:subject>News</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73726644</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/ghana-singer-shatta-wale-granted-bail-in-lamborghini-probe/a-73722417?maca=en-rss-en-cul-2090-rdf">
-  <title>Ghana: Singer Shatta Wale granted bail in Lamborghini probe</title>
-  <link>https://www.dw.com/en/ghana-singer-shatta-wale-granted-bail-in-lamborghini-probe/a-73722417?maca=en-rss-en-cul-2090-rdf</link>
-  <description>The dancehall music star was interrogated as Ghanaian officials pursue a major fraud crackdown in cooperation with the US. Wale&apos;s lawyers say the singer was not aware of any criminal links when buying the Lamborghini.</description>
-  <dc:date>2025-08-21T16:21:00Z</dc:date>
-  <dc:subject>News</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73722417</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/berlin-racist-street-name-change-stopped-again/a-73280857?maca=en-rss-en-cul-2090-rdf">
-  <title>Berlin: Racist street name change stopped again</title>
-  <link>https://www.dw.com/en/berlin-racist-street-name-change-stopped-again/a-73280857?maca=en-rss-en-cul-2090-rdf</link>
-  <description>The renaming of a Berlin boulevard to Anton-Wilhelm-Amo-Strasse, after Germany&apos;s first African-born scholar, has been blocked again. The long struggle to erase symbols of a brutal colonial past continues.</description>
-  <dc:date>2025-08-22T09:36:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73280857</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/japan-grapples-with-its-past-80-years-after-world-war-ii/a-73654758?maca=en-rss-en-cul-2090-rdf">
-  <title>Japan grapples with its past 80 years after World War II</title>
-  <link>https://www.dw.com/en/japan-grapples-with-its-past-80-years-after-world-war-ii/a-73654758?maca=en-rss-en-cul-2090-rdf</link>
-  <description>Right-wing groups in Japan continue to push historical denialism in a bid to whitewash wartime atrocities. South Korea, which suffered under Japanese occupation, wants Japan to be more open about the past.</description>
-  <dc:date>2025-08-15T13:30:00Z</dc:date>
-  <dc:subject>World</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73654758</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/what-does-birth-control-pill-have-to-do-with-auschwitz/a-73641627?maca=en-rss-en-cul-2090-rdf">
-  <title>What does birth control pill have to do with Auschwitz?</title>
-  <link>https://www.dw.com/en/what-does-birth-control-pill-have-to-do-with-auschwitz/a-73641627?maca=en-rss-en-cul-2090-rdf</link>
-  <description>When the birth control pill was introduced in 1960, women had a new kind of freedom. But the foundations were laid by a Nazi gynecologist who brutally sterilized female prisoners in Auschwitz.</description>
-  <dc:date>2025-08-14T14:59:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73641627</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/hans-christian-andersen-s-timeless-legacy/a-73501169?maca=en-rss-en-cul-2090-rdf">
-  <title>Hans Christian Andersen&apos;s timeless legacy</title>
-  <link>https://www.dw.com/en/hans-christian-andersen-s-timeless-legacy/a-73501169?maca=en-rss-en-cul-2090-rdf</link>
-  <description>The prolific Danish writer Hans Christian Andersen died 150 years ago, yet fairy tales like &quot;The Little Mermaid&quot; and &quot;The Ugly Duckling&quot; still move readers to this day.</description>
-  <dc:date>2025-08-01T15:44:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73501169</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/sound-of-falling-is-germany-s-entry-for-the-oscars/a-73720902?maca=en-rss-en-cul-2090-rdf">
-  <title>&apos;Sound of Falling&apos; is Germany&apos;s entry for the Oscars</title>
-  <link>https://www.dw.com/en/sound-of-falling-is-germany-s-entry-for-the-oscars/a-73720902?maca=en-rss-en-cul-2090-rdf</link>
-  <description>The Cannes Jury Prize-winning drama by Mascha Schilinski will represent Germany in the best international feature film category.</description>
-  <dc:date>2025-08-21T15:00:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73720902</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/germany-s-strangest-laws-why-dancing-can-get-you-fined/a-73608011?maca=en-rss-en-cul-2090-rdf">
-  <title>Germany&apos;s strangest laws: Why dancing can get you fined</title>
-  <link>https://www.dw.com/en/germany-s-strangest-laws-why-dancing-can-get-you-fined/a-73608011?maca=en-rss-en-cul-2090-rdf</link>
-  <description>From dance and movie bans on religious holidays to prohibitions on sandcastle building on Baltic beaches, Germany has some bizarre regulations.</description>
-  <dc:date>2025-08-12T11:09:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73608011</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/afghan-youth-orchestra-in-exile-resistance-against-the-taliban/a-73655000?maca=en-rss-en-cul-2090-rdf">
-  <title>Afghan Youth Orchestra in exile: Resistance against the Taliban</title>
-  <link>https://www.dw.com/en/afghan-youth-orchestra-in-exile-resistance-against-the-taliban/a-73655000?maca=en-rss-en-cul-2090-rdf</link>
-  <description>Music is banned at home. But after fleeing the Taliban into exile, the Afghan Youth Orchestra is performing in Europe about loss, hope, and the power of music.</description>
-  <dc:date>2025-08-15T12:52:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73655000</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/how-bollywood-s-lens-on-kashmir-has-changed/a-73569563?maca=en-rss-en-cul-2090-rdf">
-  <title>How Bollywood&apos;s lens on Kashmir has changed</title>
-  <link>https://www.dw.com/en/how-bollywood-s-lens-on-kashmir-has-changed/a-73569563?maca=en-rss-en-cul-2090-rdf</link>
-  <description>Bollywood once framed Kashmir through a lens of nostalgia and beauty. Now, the same landscapes carry complex stories of resilience, conflict and cultural memory.</description>
-  <dc:date>2025-08-09T18:28:00Z</dc:date>
-  <dc:subject>World</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73569563</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/taiwan-imagines-a-chinese-invasion-with-tv-and-games/a-73557405?maca=en-rss-en-cul-2090-rdf">
-  <title>Taiwan imagines a Chinese invasion with TV and games</title>
-  <link>https://www.dw.com/en/taiwan-imagines-a-chinese-invasion-with-tv-and-games/a-73557405?maca=en-rss-en-cul-2090-rdf</link>
-  <description>Taiwanese creatives are creating fictional, yet plausible, depictions of a Chinese invasion. Some say the imaginary scenarios are helpful, others say they only create fear.</description>
-  <dc:date>2025-08-07T10:48:00Z</dc:date>
-  <dc:subject>World</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73557405</dwsyn:contentID>
- </item>
- <item rdf:about="https://www.dw.com/en/who-was-thong-inventor-rudi-gernreich/a-73656347?maca=en-rss-en-cul-2090-rdf">
-  <title>Who was thong inventor Rudi Gernreich?</title>
-  <link>https://www.dw.com/en/who-was-thong-inventor-rudi-gernreich/a-73656347?maca=en-rss-en-cul-2090-rdf</link>
-  <description>The thong was created as a political statement by Austrian-born designer Rudi Gernreich, who didn&apos;t want to sexualize the body, but liberate it.</description>
-  <dc:date>2025-08-19T12:25:00Z</dc:date>
-  <dc:subject>Culture</dc:subject>
-  <dc:language>en</dc:language>
-  <dwsyn:contentID>73656347</dwsyn:contentID>
- </item>
-</rdf:RDF>
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+        <title>PBS NewsHour - Science</title>
+        <link>https://www.pbs.org/newshour/science</link>
+                <description><![CDATA[Recent science news, analysis and reporting.]]></description>
+                <language>en-US</language>
+        <copyright>NewsHour Productions LLC. All Rights Reserved. 2025</copyright>
+        <pubDate>Wed, 24 Sep 2025 14:38:01 -0400</pubDate>
+                        <item>
+            <title><![CDATA[Scientists uncover fossil of dinosaur feasting on ancient crocodile]]></title>
+            <link>https://www.pbs.org/newshour/science/scientists-uncover-fossil-of-dinosaur-feasting-on-ancient-crocodile</link>
+            <description><![CDATA[Scientists have discovered a new dinosaur from Argentina that may have used its long arms and claws to capture prey.  ]]></description>
+            <pubDate>Tue, 23 Sep 2025 13:59:40 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/scientists-uncover-fossil-of-dinosaur-feasting-on-ancient-crocodile</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/basic-research"><![CDATA[Basic Research]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/dinosaurs"><![CDATA[dinosaurs]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/science-tag"><![CDATA[SCIENCE]]></category>
+                                                        <dc:creator><![CDATA[Adithi Ramakrishnan, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2025-09-23T150149Z_406868255_RC2IKGAI4I1Q_RTRMADP_3_SCIENCE-DINOSAUR-1024x696.jpg" medium="image" width="1024" height="696" />
+                    </item>
+                <item>
+            <title><![CDATA[Gabrielle is now a Category 4 hurricane. Forecasters advise Azores to take notice]]></title>
+            <link>https://www.pbs.org/newshour/science/gabrielle-is-now-a-category-4-hurricane-forecasters-advise-azores-to-take-notice</link>
+            <description><![CDATA[People in the Azores archipelago were advised Monday to monitor the progress of Hurricane Gabrielle which is now a Category 4 hurricane in the Atlantic Ocean, the National Hurricane Center said.]]></description>
+            <pubDate>Mon, 22 Sep 2025 17:15:09 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/gabrielle-is-now-a-category-4-hurricane-forecasters-advise-azores-to-take-notice</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/azores-islands"><![CDATA[Azores Islands]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/hurricane-gabrielle"><![CDATA[hurricane gabrielle]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/national-hurricane-center"><![CDATA[national hurricane center]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/noaa"><![CDATA[NOAA]]></category>
+                                                        <dc:creator><![CDATA[Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/AP25265473982345-e1758575305669-1024x704.jpg" medium="image" width="1024" height="704" />
+                    </item>
+                <item>
+            <title><![CDATA[Day and night get equal billing as fall equinox arrives. Here are 3 things to know]]></title>
+            <link>https://www.pbs.org/newshour/science/day-and-night-get-equal-billing-as-fall-equinox-arrives-here-are-3-things-to-know</link>
+            <description><![CDATA[The autumnal equinox arrives Monday, marking the start of the fall season for the Northern Hemisphere and the spring in the Southern Hemisphere.]]></description>
+            <pubDate>Mon, 22 Sep 2025 08:00:51 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/day-and-night-get-equal-billing-as-fall-equinox-arrives-here-are-3-things-to-know</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/autumn"><![CDATA[autumn]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/equinox"><![CDATA[equinox]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/seasons"><![CDATA[seasons]]></category>
+                                                        <dc:creator><![CDATA[Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2022-10-27T000000Z_350894820_RC2T9X901WTJ_RTRMADP_3_USA-DAILYLIFE-e1758500077645-1024x671.jpg" medium="image" width="1024" height="671" />
+                    </item>
+                <item>
+            <title><![CDATA[Why the planet is drying out much faster than before, according to a new study]]></title>
+            <link>https://www.pbs.org/newshour/show/why-the-planet-is-drying-out-much-faster-than-before-according-to-a-new-study</link>
+            <description><![CDATA[According to a new study, the planet is drying at an unprecedented pace, presenting a critical threat to humanity. Researchers found that &ldquo;continental drying is having profound global impacts&rdquo; that &ldquo;threaten water availability&rdquo; across the globe. To learn more, Ali Rogin speaks with ProPublica climate investigations editor Abrahm Lustgarten for our series, Tipping Point.]]></description>
+            <pubDate>Sun, 21 Sep 2025 17:40:06 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/show/why-the-planet-is-drying-out-much-faster-than-before-according-to-a-new-study</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/climate-change"><![CDATA[Climate Change]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/groundwater"><![CDATA[groundwater]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/tipping-point"><![CDATA[Tipping Point]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/water"><![CDATA[water]]></category>
+                                                        <dc:creator><![CDATA[Ali Rogin]]></dc:creator>
+                                <dc:creator><![CDATA[Andrew Corkery]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/dryingplanet-1024x576.jpg" medium="image" width="1024" height="576" />
+                    </item>
+                <item>
+            <title><![CDATA[Nations ratify world&#8217;s first treaty to protect marine biodiversity in international waters]]></title>
+            <link>https://www.pbs.org/newshour/world/nations-ratify-worlds-first-treaty-to-protect-marine-biodiversity-in-international-waters</link>
+            <description><![CDATA[A major agreement to protect marine diversity in the high seas was struck Friday when Morocco became the 60th nation to sign on, paving the way for the treaty to take effect next year.]]></description>
+            <pubDate>Fri, 19 Sep 2025 16:35:44 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/world/nations-ratify-worlds-first-treaty-to-protect-marine-biodiversity-in-international-waters</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/biodiversity"><![CDATA[biodiversity]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/marine-life"><![CDATA[marine life]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/oceans"><![CDATA[oceans]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/wildlife"><![CDATA[wildlife]]></category>
+                                                        <dc:creator><![CDATA[Annika Hammerschlag, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2008-02-14T000000Z_1327689258_GM1DXGHTREAA_RTRMADP_3_MALAYSIA-1024x763.jpg" medium="image" width="1024" height="763" />
+                    </item>
+                <item>
+            <title><![CDATA[Army veteran who burned U.S. flag near White House pleads not guilty to federal charges]]></title>
+            <link>https://www.pbs.org/newshour/politics/army-veteran-who-burned-u-s-flag-near-white-house-pleads-not-guilty-to-federal-charges</link>
+            <description><![CDATA[An Army veteran who set fire to an American flag near the White House to protest President Donald Trump&rsquo;s recent executive order on flag burning has pleaded not guilty to federal criminal charges. ]]></description>
+            <pubDate>Wed, 17 Sep 2025 14:38:36 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/politics/army-veteran-who-burned-u-s-flag-near-white-house-pleads-not-guilty-to-federal-charges</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/donald-trump"><![CDATA[Donald Trump news]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/flag-burning"><![CDATA[flag burning]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/jeanine-pirro"><![CDATA[Jeanine Pirro]]></category>
+                                                        <dc:creator><![CDATA[Michael Kunzelman, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2025-08-25T230156Z_1087890875_RC2NEGA6MTR8_RTRMADP_3_USA-TRUMP-1024x684.jpg" medium="image" width="1024" height="684" />
+                    </item>
+                <item>
+            <title><![CDATA[WATCH: Former CDC leader Dr. Debra Houry says RFK Jr. should resign]]></title>
+            <link>https://www.pbs.org/newshour/science/watch-former-cdc-leader-dr-debra-houry-says-rfk-jr-should-resign</link>
+            <description><![CDATA[Sen. Angela Alsobrooks, D-Md., asked Dr. Debra Houry during a hearing about upheaval at the agency if she believed that Kennedy is &ldquo;incompetent and dangerous to the American people's health.&rdquo;]]></description>
+            <pubDate>Wed, 17 Sep 2025 13:49:38 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/watch-former-cdc-leader-dr-debra-houry-says-rfk-jr-should-resign</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/angela-alsobrooks"><![CDATA[angela alsobrooks]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/centers-for-disease-control-and-prevention"><![CDATA[centers for disease control and prevention]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/debra-houry"><![CDATA[Debra Houry]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/rfk-jr"><![CDATA[RFK Jr]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/susan-monarez"><![CDATA[Susan Monarez]]></category>
+                                                        <dc:creator><![CDATA[Joshua Barajas]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2025-09-17T142456Z_219143040_RC2QTGAGYI9P_RTRMADP_3_USA-HEALTH-CDC-1024x683.jpg" medium="image" width="1024" height="683" />
+                    </item>
+                <item>
+            <title><![CDATA[Economic fallout mounts as Trump halts near-finished wind power project]]></title>
+            <link>https://www.pbs.org/newshour/show/economic-fallout-mounts-as-trump-halts-near-finished-wind-power-project</link>
+            <description><![CDATA[Last month, the Trump administration abruptly halted construction on a nearly completed $6 billion, 65-turbine wind farm off the coast of New England, known as Revolution Wind. The holdup has put thousands out of work and raises big questions about not just the future of this project, but similar efforts across the eastern seaboard. Science correspondent Miles O&rsquo;Brien reports from Connecticut.]]></description>
+            <pubDate>Tue, 16 Sep 2025 18:25:51 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/show/economic-fallout-mounts-as-trump-halts-near-finished-wind-power-project</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/donald-trump"><![CDATA[Donald Trump news]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/wind-energy"><![CDATA[wind energy]]></category>
+                                                        <dc:creator><![CDATA[Amna Nawaz]]></dc:creator>
+                                <dc:creator><![CDATA[Jackson Hudgins]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/windpower-1024x682.jpg" medium="image" width="1024" height="682" />
+                    </item>
+                <item>
+            <title><![CDATA[Partial solar eclipse at the bottom of the world will close out the year&#8217;s celestial spectacles]]></title>
+            <link>https://www.pbs.org/newshour/science/partial-solar-eclipse-at-the-bottom-of-the-world-will-close-out-the-years-celestial-spectacles</link>
+            <description><![CDATA[Antarctica, New Zealand and a sliver of Australia are in prime position as the moon slips between the sun and Earth, obscuring a good portion of our star.]]></description>
+            <pubDate>Tue, 16 Sep 2025 17:03:06 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/partial-solar-eclipse-at-the-bottom-of-the-world-will-close-out-the-years-celestial-spectacles</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/astronomy"><![CDATA[astronomy]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/solar-eclipse"><![CDATA[solar eclipse]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/space"><![CDATA[space]]></category>
+                                                        <dc:creator><![CDATA[Marcia Dunn, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/GettyImages-2206954253-1024x683.jpg" medium="image" width="1024" height="683" />
+                    </item>
+                <item>
+            <title><![CDATA[The Atlantic hurricane season has been quiet &#8212; but we&#8217;re not in the clear]]></title>
+            <link>https://www.pbs.org/newshour/science/the-atlantic-hurricane-season-has-been-quiet-but-were-not-in-the-clear</link>
+            <description><![CDATA[Not a single named storm has formed in the Atlantic Ocean in nearly three weeks, even though it&rsquo;s the peak of hurricane season.]]></description>
+            <pubDate>Tue, 16 Sep 2025 14:55:49 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/the-atlantic-hurricane-season-has-been-quiet-but-were-not-in-the-clear</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/2025-hurricane-season"><![CDATA[2025 hurricane season]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/atlantic-ocean"><![CDATA[atlantic ocean]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/basic-research"><![CDATA[Basic Research]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/hurricanes"><![CDATA[hurricanes]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/science-tag"><![CDATA[SCIENCE]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/tropical-weather"><![CDATA[tropical weather]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/weather"><![CDATA[Weather]]></category>
+                                                        <dc:creator><![CDATA[Dánica Coto, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2025-08-20T174706Z_1655218126_RC24BGAPUANN_RTRMADP_3_STORM-ERIN-1024x576.jpg" medium="image" width="1024" height="576" />
+                    </item>
+                <item>
+            <title><![CDATA[Lisa Lawson explores the neuroscience of adolescence in &#8216;Thrive&#8217;]]></title>
+            <link>https://www.pbs.org/newshour/show/lisa-lawson-explores-the-neuroscience-of-adolescence-in-thrive</link>
+            <description><![CDATA[The Annie E. Casey Foundation is perhaps best known for its work helping America&rsquo;s youth. Lisa Lawson, the president and CEO, has done extensive research into the development of teenagers. She joined Geoff Bennett to discuss her new book, "Thrive: How the Science of the Adolescent Brain Helps Us Imagine a Better Future for All Children."
+]]></description>
+            <pubDate>Mon, 15 Sep 2025 18:25:51 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/show/lisa-lawson-explores-the-neuroscience-of-adolescence-in-thrive</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/adolescents"><![CDATA[adolescents]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/arts-2"><![CDATA[arts]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/books"><![CDATA[books]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/canvas"><![CDATA[CANVAS]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/lisa-lawson"><![CDATA[lisa lawson]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/neuroscience"><![CDATA[neuroscience]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/science-tag"><![CDATA[SCIENCE]]></category>
+                                                        <dc:creator><![CDATA[Geoff Bennett]]></dc:creator>
+                                <dc:creator><![CDATA[Stephanie Kotuby]]></dc:creator>
+                                <dc:creator><![CDATA[Alexa Gold]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/thrive-1024x576.jpg" medium="image" width="1024" height="576" />
+                    </item>
+                <item>
+            <title><![CDATA[New findings by NASA Mars rover provide strongest hints yet of potential signs of ancient life]]></title>
+            <link>https://www.pbs.org/newshour/science/new-findings-by-nasa-mars-rover-provide-strongest-hints-yet-of-potential-signs-of-ancient-life</link>
+            <description><![CDATA[Scientists reported the findings Wednesday, but stressed that in-depth analysis is needed of the sample gathered there last summer before reaching any conclusions.]]></description>
+            <pubDate>Wed, 10 Sep 2025 12:10:11 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/new-findings-by-nasa-mars-rover-provide-strongest-hints-yet-of-potential-signs-of-ancient-life</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/mars"><![CDATA[Mars]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/mars-rover"><![CDATA[mars rover]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/nasa"><![CDATA[NASA]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/space"><![CDATA[space]]></category>
+                                                        <dc:creator><![CDATA[Marcia Dunn, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2025-09-10T143835Z_1966747804_RC21PGAGR7US_RTRMADP_3_SPACE-MARS-1024x576.jpg" medium="image" width="1024" height="576" />
+                    </item>
+                <item>
+            <title><![CDATA[Scientists discover a powerful and surprisingly long-lasting gamma ray explosion outside our galaxy]]></title>
+            <link>https://www.pbs.org/newshour/science/scientists-discover-a-powerful-and-surprisingly-long-lasting-gamma-ray-explosion-outside-our-galaxy</link>
+            <description><![CDATA[These kinds of bursts normally last just minutes or even milliseconds, but these were detected over the course of a day.]]></description>
+            <pubDate>Tue, 09 Sep 2025 12:08:37 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/scientists-discover-a-powerful-and-surprisingly-long-lasting-gamma-ray-explosion-outside-our-galaxy</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/astronomy"><![CDATA[astronomy]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/gamma-ray"><![CDATA[gamma ray]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/hubble-space-telescope"><![CDATA[hubble space telescope]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/space"><![CDATA[space]]></category>
+                                                        <dc:creator><![CDATA[Marcia Dunn, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2023/10/hubble-1024x683.jpeg" medium="image" width="1024" height="683" />
+                    </item>
+                <item>
+            <title><![CDATA[How researchers restored a thriving habitat for Atlantic puffins in Maine]]></title>
+            <link>https://www.pbs.org/newshour/show/how-researchers-restored-a-thriving-habitat-for-atlantic-puffins-in-maine</link>
+            <description><![CDATA[Atlantic puffins face an increasingly precarious foothold due in part to a loss of habitat and to troubles tied to warming ocean waters and climate change. But an effort off the coast of Maine continues to provide a crucial nesting habitat for these seabirds and a place for them to thrive. Science correspondent Miles O'Brien traveled to the colony for our series, Tipping Point.]]></description>
+            <pubDate>Mon, 08 Sep 2025 18:35:47 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/show/how-researchers-restored-a-thriving-habitat-for-atlantic-puffins-in-maine</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/atlantic-puffin"><![CDATA[atlantic puffin]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/birds"><![CDATA[birds]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/maine"><![CDATA[maine]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/science-tag"><![CDATA[SCIENCE]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/tipping-point"><![CDATA[Tipping Point]]></category>
+                                                        <dc:creator><![CDATA[Miles O'Brien]]></dc:creator>
+                                <dc:creator><![CDATA[Will Toubman]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/Puffins-1024x782.jpg" medium="image" width="1024" height="782" />
+                    </item>
+                <item>
+            <title><![CDATA[This key phytoplankton species that fuels the food web is threatened by warming oceans, study finds]]></title>
+            <link>https://www.pbs.org/newshour/science/this-key-phytoplankton-species-that-fuels-the-food-web-is-threatened-by-warming-oceans-study-finds</link>
+            <description><![CDATA[New research suggests the microscopic bacterium, which forms the foundation of the marine food web and helps regulate the planet&rsquo;s climate, will decline sharply as seas heat up.]]></description>
+            <pubDate>Mon, 08 Sep 2025 17:17:24 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/this-key-phytoplankton-species-that-fuels-the-food-web-is-threatened-by-warming-oceans-study-finds</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/climate-change"><![CDATA[Climate Change]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/phytoplankton"><![CDATA[phytoplankton]]></category>
+                                                        <dc:creator><![CDATA[Annika Hammerschlag, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/GettyImages-1227533706-1024x684.jpg" medium="image" width="1024" height="684" />
+                    </item>
+                <item>
+            <title><![CDATA[Miss the &#8216;blood moon&#8217; total lunar eclipse? Relive it in photos]]></title>
+            <link>https://www.pbs.org/newshour/science/miss-the-blood-moon-total-lunar-eclipse-relive-it-in-photos</link>
+            <description><![CDATA[Asia had the best seats in the house this time, while countries across Europe also enjoyed nice views.]]></description>
+            <pubDate>Mon, 08 Sep 2025 12:58:33 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/miss-the-blood-moon-total-lunar-eclipse-relive-it-in-photos</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/astronomy"><![CDATA[astronomy]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/blood-moon"><![CDATA[blood moon]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/lunar-eclipse"><![CDATA[lunar eclipse]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/photos"><![CDATA[photos]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/space"><![CDATA[space]]></category>
+                                                        <dc:creator><![CDATA[Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/GettyImages-2233752217-1024x683.jpg" medium="image" width="1024" height="683" />
+                    </item>
+                <item>
+            <title><![CDATA[WATCH: September&#8217;s &#8216;blood moon&#8217; total lunar eclipse]]></title>
+            <link>https://www.pbs.org/newshour/science/watch-live-septembers-blood-moon-total-lunar-eclipse</link>
+            <description><![CDATA[The year&rsquo;s second total lunar eclipse saw Earth&rsquo;s shadow obscure this weekend&rsquo;s full moon as the home planet lined up perfectly between the moon and the sun. Asia had the best seats in the house this time, while countries across Europe also enjoyed nice views.]]></description>
+            <pubDate>Sat, 06 Sep 2025 15:12:13 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/watch-live-septembers-blood-moon-total-lunar-eclipse</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/eclipse"><![CDATA[eclipse]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/lunar-eclipse"><![CDATA[lunar eclipse]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/moon"><![CDATA[moon]]></category>
+                                                        <dc:creator><![CDATA[Marcia Dunn, Associated Press]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/2025-03-14T105037Z_1326143548_RC2VCDA39A9Z_RTRMADP_3_LUNAR-ECLIPSE-VENEZUELA-1024x683.jpg" medium="image" width="1024" height="683" />
+                    </item>
+                <item>
+            <title><![CDATA[Why did the EU ban gel nail polish? 3 things to know]]></title>
+            <link>https://www.pbs.org/newshour/health/the-eu-has-banned-a-key-ingredient-in-gel-nail-polish-heres-why-experts-say-its-still-safe</link>
+            <description><![CDATA[Many people love gel nail polish for its durability and shiny gloss, but a new ban in Europe may have left mani-pedi devotees with some not-so-pretty concerns.]]></description>
+            <pubDate>Fri, 05 Sep 2025 18:21:36 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/health/the-eu-has-banned-a-key-ingredient-in-gel-nail-polish-heres-why-experts-say-its-still-safe</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/chemicals"><![CDATA[chemicals]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/cosmetics"><![CDATA[cosmetics]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/european-union"><![CDATA[European Union]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/fda"><![CDATA[FDA]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/Food-and-Drug-administration"><![CDATA[food and drug administration]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/nail-polish"><![CDATA[nail polish]]></category>
+                                                        <dc:creator><![CDATA[Genesis Magpayo]]></dc:creator>
+                                                                <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/GettyImages-1133166414-1024x710.jpg" medium="image" width="1024" height="710" />
+                    </item>
+                <item>
+            <title><![CDATA[Thousands of newborn stars dazzle in Webb Space Telescope&#8217;s latest snapshot]]></title>
+            <link>https://www.pbs.org/newshour/science/thousands-of-newborn-stars-dazzle-in-webb-space-telescopes-latest-snapshot</link>
+            <description><![CDATA[Released this week, the picture provides a breathtaking view of a nearby star-birthing center, 5,500 light-years away. A single light-year is 5.8 trillion miles.]]></description>
+            <pubDate>Fri, 05 Sep 2025 13:56:57 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/science/thousands-of-newborn-stars-dazzle-in-webb-space-telescopes-latest-snapshot</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/james-webb-space-telescope"><![CDATA[James Webb Space Telescope]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/nasa"><![CDATA[NASA]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/space"><![CDATA[space]]></category>
+                        <category domain="https://www.pbs.org/newshour/tag/stars"><![CDATA[stars]]></category>
+                                                        <dc:creator><![CDATA[Marcia Dunn, Associated Press]]></dc:creator>
+                                                            </item>
+                <item>
+            <title><![CDATA[News Wrap: Judge rules White House unlawfully blocked Harvard&#8217;s research grants]]></title>
+            <link>https://www.pbs.org/newshour/show/news-wrap-judge-rules-white-house-unlawfully-blocked-harvards-research-grants</link>
+            <description><![CDATA[In our news wrap Wednesday, a federal judge ruled that the Trump administration unlawfully terminated Harvard's research grants, Florida is moving to become the first state to eliminate all vaccine mandates for children to attend school and President Trump is defending a military strike on a boat in the Caribbean, saying it will prevent further attempts to bring drugs into the country.]]></description>
+            <pubDate>Wed, 03 Sep 2025 18:50:22 -0400</pubDate>
+            <guid isPermaLink="true">https://www.pbs.org/newshour/show/news-wrap-judge-rules-white-house-unlawfully-blocked-harvards-research-grants</guid>
+                        <category domain="https://www.pbs.org/newshour/tag/news-wrap"><![CDATA[news wrap]]></category>
+                                                            <media:content url="https://d3i6fh83elv35t.cloudfront.net/static/2025/09/NewsWrap-2-1024x683.jpg" medium="image" width="1024" height="683" />
+                    </item>
+            </channel>
+</rss>

@@ -9,7 +9,7 @@ con.execute("DROP INDEX IF EXISTS idx_ts;")
 con.execute("DROP INDEX IF EXISTS idx_cluster;")
 
 
-con.execute("DROP TABLE IF EXISTS paragraph;")
+con.execute("DROP TABLE IF EXISTS article;")
 con.commit()
 con.close()
-print("Dropped table 'paragraph' and related indexes (if they existed).")
+print("Dropped table 'article' and related indexes (if they existed).")

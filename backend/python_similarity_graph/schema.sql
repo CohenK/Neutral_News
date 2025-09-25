@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS article (
   title         TEXT,                  
   text          TEXT NOT NULL,         
   cluster_id    TEXT,                  
-  cluster_label TEXT                   
+  cluster_keywords TEXT                   
 );
 
 CREATE INDEX IF NOT EXISTS idx_article_cluster ON article(cluster_id);
