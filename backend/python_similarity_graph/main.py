@@ -1,10 +1,9 @@
 import os
-import re
 import pathlib
 import json
 from sentence_transformers import SentenceTransformer
 from graph import Graph
-
+from clean import clean_article
 
 def extract_dir_data(dir_path):
     """ given a directory get article data in all its files and clean the data """
@@ -14,13 +13,63 @@ def extract_dir_data(dir_path):
         with open(filepath, 'r', encoding='utf-8', errors='strict') as f:
             data = json.load(f)
         # clean article data by replacing newlines with spaces
-        data["content"] = data["content"].replace('\n', ' ')
-        data["content"] = data["content"].replace('\"', '"')
-        data["content"] = data["content"].replace('\t', ' ')
-        data["content"] = re.sub(r"\s+", " ", data["content"]).strip()
+        data["content"] = clean_article(data["content"])
         result.append(data)
         f.close()
     return result
+
+# def clean_article(data):
+#     """ remove new outlet boiler plate from article text """
+#     res = data
+
+#     bad = [
+#         '\t', '\"',
+#         'Al Jazeera', 'Al Jazeera English', 'Published On', 'By Al Jazeera Staff', 'Source: Al Jazeera',
+#         'All rights reserved', 'Sign up for our newsletter', '(AP)', 'Associated Press',
+#         'The Associated Press contributed to this report.',
+#         'All rights reserved. This material may not be published, broadcast, rewritten or redistributed.',
+#         'BBC News', 'BBC', 'See full coverage on BBC News.', '© BBC.', 'The BBC is not responsible for the content of external sites.',
+#         'Deutsche Welle', 'DW', '(Reuters, AFP, dpa)', 'This article was originally written in German.',
+#         'NPR', 'This text may not be in its final form and may be updated or revised.',
+#         'PBS NewsHour', 'Watch tonight’s PBS NewsHour for more coverage.',
+#         'Join our mailing list', 'Subscribe for more stories', 'Click here to read more', 'Share this article'
+#     ]
+    
+#     for b in bad:
+#         res = res.replace(b, '')
+    
+#     patterns = [
+#         # BBC
+#         r'(?im)^By\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+,\s*BBC\s+News\.?\s*$',
+#         # general
+#         r'(?i)\bfirst\s+published\s+on\s+(?:\d{1,2}\s+\w+\s+\d{4}|\w+\s+\d{1,2},?\s+\d{4})', '', res,
+#         r'(?i)\bedited\s+by\s+[A-Z][\w\s.-]+', '', res,
+#         r'(?i)\breporting\s+by\s+[A-Z][\w\s.-]+', '', res,
+#         r'(?i)\bfollow\s+[A-Z][\w\s.-]+\s+on\s+[A-Z][\w\s.-]+', '', res,
+#         r'(?i)\bsign\s+up\s+for\s+the\s+[A-Z][\w\s.-]+\s+(?:newsletter|newspaper)', '', res,
+#         r'(?i)\bthis\s+story\s+originally\s+appeared\s+on\s+[A-Z][\w\s.-]+', '', res,
+#         r'(?im)(copyright\s*)?©\s*\d{4}\s*[\w\s.-]+\.?\s*all\s+rights\s+reserved\.?', '', res,
+#         r'(?i)\blisten\s+to\s+this\s+story\s+on\s+(?:all\s+things\s+considered|morning\s+edition)[.!]?\s*', '', res,
+#     ]
+
+#     for p in patterns:
+#         res = re.sub(p,'',res)
+
+#     res = re.sub(r'(?im)^[^\n]*\((?:AP\s+Photo|AP)\s*/[^)]+\)[^\n]*$', '', res)
+#     res = re.sub(r'\s*\(AP\s+Photo/[^)]+\)', '', res)
+#     res = re.sub(r'(?im)(?:\s*(?:copyright\s*)?©?\s*20\d{2}\s*(?:the\s+)?associated\s+press\.?\s*all\s+rights\s+reserved\.?)+\s*', '', res)
+#     res = re.sub(r'(?im)^\s*AP\s+[A-Z]{2,}:\s*\S+\s*$', '', res)
+#     res = re.sub(r'(?im)^\s*\(AP\)\s*$', '', res)
+#     res = re.sub(r'(?im)^\s*CORRECTION\b.*$', '', res)
+
+
+#     res = res.replace('\r\n', '\n').replace('\r', '\n')
+#     res = '\n'.join(line for line in (ln.strip() for ln in res.split('\n')) if line)
+#     res = re.sub(r'[ \t\u00A0]+', ' ', res)
+    
+#     res = res.strip()
+    
+#     return res
 
 def append_to_json_array(path, obj):
     """ write all article json data for debugging purposes """
@@ -70,5 +119,6 @@ def main():
     graph.compute_edges()
     graph.cluster()
     write_cluster("clusters.json",graph._clusterIds)
+    graph.store_graph()
 
 main()

@@ -17,7 +17,6 @@ class Graph():
     def __init__(self, embeddings: np.ndarray, articles, thresh):
         self._idToInt = {}
         self._intToId = []
-        self._embeddings = embeddings
         self._adj = [dict() for _ in range(len(embeddings))]
         self._thresh = thresh
         self._idToData = {} # article url to article mapping
@@ -26,6 +25,8 @@ class Graph():
         self._clusterIds = defaultdict(list) # list of article for each cluster
         self._length = len(embeddings)
         self._clusterKeywords = {}
+        emb = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True)+1e-9)
+        self._embeddings = emb.astype(np.float32)
 
         for a in articles:
             self._idToData[a["url"]] = a
