@@ -6,6 +6,7 @@ use futures::stream::{FuturesUnordered, StreamExt};
 use xmltree::Element;
 use std::collections::HashSet;
 use reqwest::Client;
+use regex::Regex;
 
 pub fn is_valid_article_link(url: &String, ignore:&Vec<String>) -> bool {
     let blacklist = [
@@ -91,7 +92,7 @@ fn slug_from_url(raw_url: &str) -> String {
     }
 }
 
-pub fn save_data(url: &str, title: &str, content: &str, directory: &str) -> std::io::Result<()> {
+pub fn save_data(url: &str, title: &str, content: &str, images: &Vec<String>, directory: &str) -> std::io::Result<()> {
     // dont save waiting pages
     if content.is_empty(){
         log::info!("page is empty: {}",url);
@@ -110,7 +111,8 @@ pub fn save_data(url: &str, title: &str, content: &str, directory: &str) -> std:
         let json = json!({
             "url": url,
             "title": title,
-            "content": content
+            "content": content,
+            "images": images,
         });
         std::fs::write(filepath, serde_json::to_string_pretty(&json)?)?;
         log::info!("Saved: {}", url);
@@ -118,11 +120,12 @@ pub fn save_data(url: &str, title: &str, content: &str, directory: &str) -> std:
     Ok(())
 }
 
-pub fn parse_html(body: String)->(String, String){
+pub fn parse_html(body: String)->(String, String, Vec<String>){
     // given an html body string get the title and contents
     let document = scraper::Html::parse_document(&body);
     let title_selector = scraper::Selector::parse("title").unwrap();
     let p_selector = scraper::Selector::parse("p").unwrap();
+    let img_selector = scraper::Selector::parse("img").unwrap();
 
     let title = document
         .select(&title_selector)
@@ -136,7 +139,25 @@ pub fn parse_html(body: String)->(String, String){
         .collect::<Vec<_>>()
         .join("\n");
 
-    (title, content)
+    let mut images: Vec<String> = document
+        .select(&img_selector)
+        .flat_map(|i| {
+            let src =  i.value().attr("src").unwrap_or("").trim();
+            let srcset =  i.value().attr("srcset").unwrap_or("").trim();
+
+            if !src.is_empty() {
+                Some(src.to_string())
+            }else{
+                let set: Vec<String> = srcset.split(",").map(|s| s.trim().to_string()).collect();
+                let target = set.last().map(|s| s.as_str()).unwrap_or("").split_whitespace().map(|t| t.to_string()).collect::<Vec<_>>();
+                Some(target.first().map(|s| s.as_str()).unwrap_or("").to_string())
+            }
+        })
+        .collect();
+
+    images = images.into_iter().filter(|i| !i.is_empty()).collect();
+
+    (title, content, images)
 }
 
 async fn fetch_page(url: String)->Result<String, reqwest::Error>{
@@ -162,9 +183,9 @@ pub async fn get_pages(links: Vec<String>, ignore:Vec<String>)->(){
     while let Some(result) = fetched.next().await{
         match result{
             (link,Ok(body))=>{
-                let (title, content) = parse_html(body);
+                let (title, content, images) = parse_html(body);
                 if is_valid_article_link(&link, &ignore){
-                    if let Err(e) = save_data(&link, &title, &content, "rss") {
+                    if let Err(e) = save_data(&link, &title, &content, &images, "rss") {
                         log::error!("Error saving {}: {}", link, e);
                     } else {
                         titles.insert(title.clone());

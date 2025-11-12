@@ -1,1 +1,3 @@
 .venv/
+backend/rust_article_fetcher/rss/
+backend/rust_article_fetcher/crawled_data/

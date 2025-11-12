@@ -78,11 +78,11 @@ impl Crawler {
                     }
                 };
 
-                let (title,content) = utils::parse_html(body);
+                let (title,content, images) = utils::parse_html(body);
 
                 match Url::parse(&url_clone){
                     Ok(_)=>{
-                        if let Err(e) = utils::save_data(&url_clone, &title, &content, "crawled_data") {
+                        if let Err(e) = utils::save_data(&url_clone, &title, &content, &images, "crawled_data") {
                             log::error!("Error saving {}: {}", url_clone, e);
                         } else {
                             log::info!("Saved: {}", url_clone);
