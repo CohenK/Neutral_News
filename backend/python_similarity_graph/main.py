@@ -3,7 +3,7 @@ import pathlib
 import json
 from sentence_transformers import SentenceTransformer
 from graph import Graph
-from clean import clean_article
+from clean import clean_article, clean_img_srcs
 
 def extract_dir_data(dir_path):
     """ given a directory get article data in all its files and clean the data """
@@ -14,6 +14,7 @@ def extract_dir_data(dir_path):
             data = json.load(f)
         # clean article data by replacing newlines with spaces
         data["content"] = clean_article(data["content"])
+        data["images"] = clean_img_srcs(data["url"], data["images"])
         result.append(data)
         f.close()
     return result

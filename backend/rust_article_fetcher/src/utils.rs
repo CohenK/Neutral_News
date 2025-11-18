@@ -154,9 +154,9 @@ pub fn parse_html(body: String)->(String, String, Vec<String>){
             }
         })
         .collect();
-
+    // remove empty image sources
     images = images.into_iter().filter(|i| !i.is_empty()).collect();
-
+    
     (title, content, images)
 }
 
@@ -166,7 +166,7 @@ async fn fetch_page(url: String)->Result<String, reqwest::Error>{
 }
 
 pub async fn get_pages(links: Vec<String>, ignore:Vec<String>)->(){
-    /* Concurrently run fetch_page and parse HTML to get title and content for saving */
+    /* Concurrently run fetch_page and parse HTML to get outlet name, title, content, images for saving */
     let mut fetched = links.
         into_iter().
         map(|link| {

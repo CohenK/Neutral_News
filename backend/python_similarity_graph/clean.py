@@ -1,4 +1,5 @@
 import re
+from urllib.parse import urlparse
 
 line_patterns_general = [
     
@@ -103,3 +104,29 @@ def clean_article(data: str, min_ratio: float = 0.4, min_chars: int = 200) -> st
         return cleaned_fallback
 
     return cleaned
+
+def clean_img_srcs(url, srcs):
+    domain = re.search(r'^(?:https?:\/\/)?(?:www\.)?([^\/:?#]+)',url).group(1)
+
+    seen = set()
+    unique_sources = []
+
+    srcs = [s for s in srcs if not (
+        "promo" in s or 
+        ".svg" in s or 
+        "placeholder" in s or
+        s.startswith("data:image")
+    )]
+    for src in srcs:
+        parsed = urlparse(src)
+        filename = parsed.path.split("/")[-1]
+        if filename not in seen:
+            seen.add(filename)
+            unique_sources.append(src)
+
+    if "aljazeera" in domain:
+        return list(map(lambda src: f"https://{domain}/{src}", unique_sources))
+    elif "apnews" in domain:
+        return [src for src in unique_sources if ".png" not in src]
+    else:
+        return unique_sources
