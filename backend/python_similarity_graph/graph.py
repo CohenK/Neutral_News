@@ -2,7 +2,10 @@ import numpy as np
 from collections import deque, defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer, ENGLISH_STOP_WORDS
 import spacy
-import sqlite3
+import pathlib
+import json
+import os
+from utils import append_to_json_array
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -119,6 +122,13 @@ class Graph():
         self.store_graph()
         
 
+    def write_cluster(self, path):
+        """ write cluster dictionary to a field in json format for debugging """
+        p = pathlib.Path(path)
+        with open(p,'w') as f:
+            json.dump(self._clusterIds,f, indent=4)
+        f.close()
+
     def keyword_cleanup(self):
         """ clean keyword list for each cluster """
         
@@ -136,12 +146,9 @@ class Graph():
             self._clusterKeywords[cid] = cluster
     
     def store_graph(self):
-        conn = sqlite3.connect("data/news.db")
-        cursor = conn.cursor()
-        count = 0 #batch commite so save memory and time
-
+        """ format collected and computed data of each article and add to the database.json file """
+        
         for id in self._ids:
-            count += 1
             data = self._idToData[id]
             url = data["url"]
             site = ""
@@ -159,12 +166,14 @@ class Graph():
                 site = "APNews"
 
             cluster_id = self._idToCluster[id]
-            cursor.execute(
-                "INSERT OR IGNORE INTO article (url, site, title, text, cluster_id, cluster_keywords) VALUES (?, ?, ?, ?, ?, ?)",
-                (url, site, data["title"], data["content"], cluster_id, ",".join(self._clusterKeywords[cluster_id]))
-            )
-            if count % 20 == 0:
-                conn.commit()
 
-        conn.commit()
-        conn.close()
+            data = {
+                "url": url,
+                "site": site,
+                "title": data["title"],
+                "text": data["content"],
+                "images": data["images"],
+                "cluster_id": cluster_id,
+                "cluster_keywords": ",".join(self._clusterKeywords[cluster_id])
+            }
+            append_to_json_array(os.path.join("data","database.json"), data)
