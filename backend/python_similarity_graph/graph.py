@@ -173,6 +173,8 @@ class Graph():
                 "title": data["title"],
                 "text": data["content"],
                 "images": data["images"],
+                "labels": data["labels"],
+                "score": data["score"],
                 "cluster_id": cluster_id,
                 "cluster_keywords": ",".join(self._clusterKeywords[cluster_id])
             }

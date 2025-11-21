@@ -3,6 +3,7 @@ import pathlib
 from sentence_transformers import SentenceTransformer
 from graph import Graph
 from utils import extract_dir_data, append_to_json_array
+from nlp import infer
 
 
 def main():
@@ -14,6 +15,9 @@ def main():
     article_data += extract_dir_data(rss_dir)
     article_data += extract_dir_data(crawled_data_dir)
     for a in article_data:
+        labels, score = infer(a["content"])
+        a["labels"] = labels
+        a["score"] = score
         append_to_json_array(os.path.join("data", "articles.json"), a)
 
 
