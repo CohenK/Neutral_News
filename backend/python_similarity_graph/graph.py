@@ -148,6 +148,7 @@ class Graph():
     def store_graph(self):
         """ format collected and computed data of each article and add to the database.json file """
         
+        p = pathlib.Path(os.path.join("data","database.json"))
         for id in self._ids:
             data = self._idToData[id]
             url = data["url"]
@@ -178,4 +179,13 @@ class Graph():
                 "cluster_id": cluster_id,
                 "cluster_keywords": ",".join(self._clusterKeywords[cluster_id])
             }
-            append_to_json_array(os.path.join("data","database.json"), data)
+
+            if p.exists() and p.stat().st_size > 0:
+                try:
+                    db = json.loads(p.read_text(encoding="utf-8"))
+                except json.JSONDecodeError:
+                    db = {}
+                db[url] = data
+            else:
+                db = {url: data}
+            p.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
