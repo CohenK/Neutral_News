@@ -2,7 +2,10 @@ import pathlib
 import json
 import re
 import os
+import nltk
 from urllib.parse import urlparse
+
+nltk.download("punkt")
 
 line_patterns_general = [
     
@@ -150,6 +153,18 @@ def append_to_json_array(path, obj):
         data = [obj]
     p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
+def add_to_json_file(path, key, val):
+    p = pathlib.Path(path)
+    if p.exists() and p.stat().st_size > 0:
+        try:
+            db = json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            db = {}
+        db[key] = val
+    else:
+        db = {key: val}
+    p.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
+
 def extract_dir_data(dir_path):
     """ given a directory get article data in all its files and clean the data """
     result = []
@@ -163,3 +178,6 @@ def extract_dir_data(dir_path):
         result.append(data)
         f.close()
     return result
+
+def split_into_sentences(text):
+    return nltk.sent_tokenize(text)

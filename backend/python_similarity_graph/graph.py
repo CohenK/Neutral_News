@@ -5,7 +5,8 @@ import spacy
 import pathlib
 import json
 import os
-from utils import append_to_json_array
+from sklearn.metrics.pairwise import cosine_similarity
+from utils import add_to_json_file
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -25,7 +26,7 @@ class Graph():
         self._idToData = {} # article url to article mapping
         self._ids = [a["url"] for a in articles]
         self._idToCluster= {} # article ID to cluster mapping
-        self._clusterIds = defaultdict(list) # list of article for each cluster
+        self._clusterIds = defaultdict(lambda: {"articles": [], "common": []}) # list of article for each cluster
         self._length = len(embeddings)
         self._clusterKeywords = {}
         emb = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True)+1e-9)
@@ -116,7 +117,7 @@ class Graph():
                 self._clusterKeywords[cid] = ",".join(keywords[top_idx])
 
         for key, val in self.idToCluster.items():
-            self._clusterIds[val].append(key)
+            self._clusterIds[val]["articles"].append(key)
         
         self.keyword_cleanup()
         self.store_graph()
@@ -148,7 +149,6 @@ class Graph():
     def store_graph(self):
         """ format collected and computed data of each article and add to the database.json file """
         
-        p = pathlib.Path(os.path.join("data","database.json"))
         for id in self._ids:
             data = self._idToData[id]
             url = data["url"]
@@ -179,13 +179,8 @@ class Graph():
                 "cluster_id": cluster_id,
                 "cluster_keywords": ",".join(self._clusterKeywords[cluster_id])
             }
-
-            if p.exists() and p.stat().st_size > 0:
-                try:
-                    db = json.loads(p.read_text(encoding="utf-8"))
-                except json.JSONDecodeError:
-                    db = {}
-                db[url] = data
-            else:
-                db = {url: data}
-            p.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
+            add_to_json_file(os.path.join("data","database.json"), url, data)
+    
+    # def compute_cluster_sentences(self):
+    #     for cluster in self._clusterIds:
+    #         for url in cluster["articles"]:

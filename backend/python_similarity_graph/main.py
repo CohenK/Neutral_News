@@ -2,9 +2,8 @@ import os
 import pathlib
 from sentence_transformers import SentenceTransformer
 from graph import Graph
-from utils import extract_dir_data, append_to_json_array
+from utils import extract_dir_data, add_to_json_file
 from nlp import infer
-
 
 def main():
     curr_dir = pathlib.Path.cwd().parent
@@ -18,12 +17,17 @@ def main():
         labels, score = infer(a["content"])
         a["labels"] = labels
         a["score"] = score
-        append_to_json_array(os.path.join("data", "articles.json"), a)
+        add_to_json_file(os.path.join("data", "articles.json"), a["url"], a)
 
 
     model = SentenceTransformer("all-MiniLM-L6-v2")
     contents = [a["content"] for a in article_data]
     embeddings = model.encode(contents, normalize_embeddings=True)
+
+    # article_sentences = {}
+    # for a in article_data:
+    #     article_sentences[a["url"]] = split_into_sentences(a["content"])
+
 
     idToArticle = {}
     for a in article_data:
