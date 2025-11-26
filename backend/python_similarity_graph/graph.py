@@ -7,6 +7,7 @@ import json
 import os
 from sklearn.metrics.pairwise import cosine_similarity
 from utils import add_to_json_file
+import sqlite3
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -149,6 +150,11 @@ class Graph():
     def store_graph(self):
         """ format collected and computed data of each article and add to the database.json file """
         
+        conn = sqlite3.connect("data/database.db")
+        cursor = conn.cursor()
+        batch_rows = []
+        sql = "INSERT INTO articles (url, site, title, text, images, labels, score, cluster_id, cluster_keywords) VALUES (?,?,?,?,?,?,?,?,?)"
+
         for id in self._ids:
             data = self._idToData[id]
             url = data["url"]
@@ -168,18 +174,21 @@ class Graph():
 
             cluster_id = self._idToCluster[id]
 
-            data = {
-                "url": url,
-                "site": site,
-                "title": data["title"],
-                "text": data["content"],
-                "images": data["images"],
-                "labels": data["labels"],
-                "score": data["score"],
-                "cluster_id": cluster_id,
-                "cluster_keywords": ",".join(self._clusterKeywords[cluster_id])
-            }
-            add_to_json_file(os.path.join("data","database.json"), url, data)
+            batch_rows.append((
+                url,
+                site,
+                data["title"],
+                data["content"],
+                json.dumps(data["images"]),
+                data["labels"],
+                data["score"],
+                cluster_id,
+                ",".join(self._clusterKeywords[cluster_id])
+            ))
+
+        cursor.executemany(sql, batch_rows)
+        conn.commit()
+        conn.close()
     
     # def compute_cluster_sentences(self):
     #     for cluster in self._clusterIds:

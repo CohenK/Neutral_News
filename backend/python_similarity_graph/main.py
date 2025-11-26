@@ -37,6 +37,5 @@ def main():
     graph.compute_edges()
     graph.cluster()
     graph.write_cluster(os.path.join("data","clusters.json"))
-    graph.store_graph()
 
 main()
