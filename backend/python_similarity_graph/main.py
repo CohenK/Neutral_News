@@ -1,6 +1,5 @@
 import os
 import pathlib
-from sentence_transformers import SentenceTransformer
 from graph import Graph
 from utils import extract_dir_data, add_to_json_file
 from nlp import infer
@@ -19,23 +18,8 @@ def main():
         a["score"] = score
         add_to_json_file(os.path.join("data", "articles.json"), a["url"], a)
 
-
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-    contents = [a["content"] for a in article_data]
-    embeddings = model.encode(contents, normalize_embeddings=True)
-
-    # article_sentences = {}
-    # for a in article_data:
-    #     article_sentences[a["url"]] = split_into_sentences(a["content"])
-
-
-    idToArticle = {}
-    for a in article_data:
-        idToArticle[a["url"]] = a
-
-    graph = Graph(embeddings, article_data, 0.8)
+    graph = Graph(article_data, 0.8)
     graph.compute_edges()
     graph.cluster()
-    graph.write_cluster(os.path.join("data","clusters.json"))
 
 main()

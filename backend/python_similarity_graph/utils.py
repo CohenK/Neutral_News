@@ -5,8 +5,6 @@ import os
 import nltk
 from urllib.parse import urlparse
 
-nltk.download("punkt")
-
 line_patterns_general = [
     
     re.compile(r'(?im)^\s*By\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+,\s*BBC\s+News\.?\s*$'),
@@ -24,9 +22,42 @@ line_patterns_general = [
     re.compile(r'(?im)^\s*Published\s+On\b.*$'),
     re.compile(r'(?im)^\s*By\s+Al\s+Jazeera\s+Staff\s*$'),
     re.compile(r'(?im)^\s*Source:\s*Al\s+Jazeera\s*$'),
+    re.compile(r'(?im)^\s*Follow\b.*$'),
+    re.compile(r'(?im)^\s*Share\s*$'),
+    re.compile(r'(?im)^\s*Save\s*$'),
+    re.compile(r'(?im)^\s*READ\s+MORE[:：]?\s*$'),
+    re.compile(r'(?im)^\s*Leave\s+your\s+feedback\s*$'),
+    re.compile(r'(?im)^\s*Thank\s+you\.?\s*$'),
+    re.compile(r'(?im)^\s*Please\s+check\s+your\s+inbox\s+to\s+confirm\.?\s*$'),
+    re.compile(r'(?im)^\s*All\s+Rights\s+Reserved\.?\s*$'),
+    re.compile(r'(?im)^\s*©\s*\d{4}.*$'),
+    re.compile(r'(?im)^\s*Subscribe\b.*$'),
+    re.compile(r'(?im)^\s*Learn\s+more\s*$'),
+    re.compile(r'(?im)^\s*Sections\s*$'),
+    re.compile(r'(?im)^\s*About\s*$'),
+    re.compile(r'(?im)^\s*Stay\s+Connected\s*$'),
+    re.compile(r'(?im)^Audio\s+on.*may\s+be\s+edited.*$'),
+    re.compile(r'(?im)^Transcript\s+text\s+may\s+be\s+revised.*$'),
+    re.compile(r'(?im)^Accuracy\s+and\s+availability.*$'),
+    re.compile(r'(?im)^Notice:\s*Transcripts?.*lightly\s+edited.*$'),
+    re.compile(r'(?im)^\s*Sponsor\s+Message\s*$'),
+    re.compile(r'(?im)^\s*hide\s+caption\s*$'),
+    re.compile(r'(?im)^Visit\s+our\s+website\s+terms\s+of\s+use.*$'),
+    re.compile(r'(?im)^Support\s+for\s+News\s+Hour\s+Provided\s+By.*$'),
+    re.compile(r'(?im)^\s*(?:By\s+)?[A-Z][a-z]+\s+[A-Z][a-z]+(?:,\s*[A-Z][a-z]+\s+[A-Z][a-z]+)*\s*$'),
+    re.compile(r'(?im)^\s*Watch\s+the\s+Full\s+Episode.*$'),
+    re.compile(r'(?im)^©\s*1996\s*-\s*2025\s*NewsHour\s+Productions\s+LLC\..*$'),
+    re.compile(r'(?im)^\s*By\s+[A-Z][A-Za-z .,-]*(?:News|Press|Staff|Agency)?\.?\s*$'),
+    re.compile(
+        r'(?im)^\s*(?:Photo\s+by|Photo\s*[:\-]|Support\s+Provided\s+By[:\-])?\s*'
+        r'By\s+'
+        r'[A-Z][A-Za-z0-9 .,’\'\-]*(?:Press|News|Staff|Agency|Service|AP|NPR|BBC)?'
+        r'\.?\s*$'
+    )
+
 ]
 
-line_patterns_ap = [
+line_patterns_specific = [
     # AP photo credit
     re.compile(r'(?im)^[^\n]*\((?:AP\s+Photo|AP)\s*/[^)]+\)[^\n]*$'),
     # AP hub link
@@ -37,6 +68,20 @@ line_patterns_ap = [
     re.compile(r'(?im)^\s*CORRECTION\b.*$'),
     # multiple AP copyright
     re.compile(r'(?im)(?:^\s*(?:copyright\s*)?©?\s*20\d{2}\s*(?:the\s+)?associated\s+press\.?\s*all\s+rights\s+reserved\.?\s*$\s*)+'),
+    re.compile(r'(?im)^\s*Become\s+an\s+NPR\s+sponsor\s*$'),
+    re.compile(r'(?im).*Avelar\/AP.*$'),
+    re.compile(r'(?im)^\s*Lisa\s+Desjardins.*$'),
+    re.compile(r'(?im)^\s*Eliot\s+Barnhart.*$'),
+    re.compile(r'(?im)^\s*PBS\s+is\s+a\s+501\(c\)\(3\)\s+not-for-profit\s+organization\.?\s*$'),
+    re.compile(r'(?im)^\s*By\s+Reuters\s*$'),
+    re.compile(r'(?im)^\s*By\s+[A-Z][A-Za-z .,-]+?\s+and\s+Reuters\s*$'),
+    re.compile(r'(?im)^\s*By\s+[A-Z][A-Za-z .,-]+?\s+and\s+News\s+Agencies\s*$'),
+    re.compile(r'(?im)^\s*Follow\s+Al\s+Jazeera(?:\s+English)?\s*:?\s*$'),
+    re.compile(r'(?im)^\s*\(AP\s+Photo.*\)$'),
+    re.compile(r'(?im)^\s*(The\s+)?Associated\s+Press\s*$'),
+    re.compile(r'(?im)^Stay\s+up\s+to\s+date\s+with\s+the\s+news.*$'),
+    re.compile(r'(?im)^\s*By\s+Associated\s+Press\s*$'),
+    re.compile(r'(?im)^\s*\(?AP\)?[^\n]*$'),
 ]
 
 inline_patterns = [
@@ -53,6 +98,14 @@ inline_patterns = [
     re.compile(r'(?i)\blisten\s+to\s+this\s+story\s+on\s+(?:all\s+things\s+considered|morning\s+edition)[.!]?\s*'),
     # inline AP photo credit
     re.compile(r'\s*\(AP\s+Photo/[^)]+\)'),
+    re.compile(r'(?i)did\s+not\s+respond\s+to\s+(?:a\s+)?(?:request\s+for\s+)?comment'),
+    re.compile(r'(?i)declined\s+to\s+comment'),
+    re.compile(r'(?i)asked\s+for\s+comment'),
+    re.compile(r'(?i)could\s+not\s+be\s+reached\s+for\s+comment'),
+    re.compile(r'(?i)not\s+immediately\s+available\s+for\s+comment'),
+    re.compile(r'(?i)according\s+to\s+the\s+statement'),
+    re.compile(r'(?i)in\s+an\s+emailed\s+statement'),
+    re.compile(r'(?i)as\s+of\s+press\s+time')
 ]
 
 # less aggressive to avoid over deletion
@@ -93,7 +146,7 @@ def clean_article(data: str, min_ratio: float = 0.4, min_chars: int = 200) -> st
 
     cleaned = apply_rules(
         original,
-        line_rules=line_patterns_ap + line_patterns_ap,
+        line_rules=line_patterns_specific + line_patterns_specific,
         inline_rules=inline_patterns
     )
 
@@ -180,4 +233,9 @@ def extract_dir_data(dir_path):
     return result
 
 def split_into_sentences(text):
-    return nltk.sent_tokenize(text)
+    try:
+        return nltk.sent_tokenize(text)
+    except LookupError:
+        nltk.download("punkt")
+        nltk.download("punkt_tab")
+        return nltk.sent_tokenize(text)

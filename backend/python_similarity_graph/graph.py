@@ -6,8 +6,9 @@ import pathlib
 import json
 import os
 from sklearn.metrics.pairwise import cosine_similarity
-from utils import add_to_json_file
 import sqlite3
+from utils import split_into_sentences
+from sentence_transformers import SentenceTransformer
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -19,19 +20,23 @@ def noun_filter(text):
     return filtered
 
 class Graph():
-    def __init__(self, embeddings: np.ndarray, articles, thresh):
+    def __init__(self, articles, thresh):
+        contents = [a["content"] for a in articles]
+        self._model = SentenceTransformer("all-MiniLM-L6-v2")
+        embeddings = self._model.encode(contents, normalize_embeddings=True)        
+        emb = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True)+1e-9)
+
+        self._embeddings = emb.astype(np.float32)
+        self._length = len(embeddings)
+        self._adj = [dict() for _ in range(len(embeddings))]
         self._idToInt = {}
         self._intToId = []
-        self._adj = [dict() for _ in range(len(embeddings))]
         self._thresh = thresh
         self._idToData = {} # article url to article mapping
         self._ids = [a["url"] for a in articles]
         self._idToCluster= {} # article ID to cluster mapping
-        self._clusterIds = defaultdict(lambda: {"articles": [], "common": []}) # list of article for each cluster
-        self._length = len(embeddings)
+        self._clusterIds = defaultdict(lambda: {"articles": [], "sentences": [], "meta": {},"pairs": []}) # list of article for each cluster and the cluster's similarity matrix
         self._clusterKeywords = {}
-        emb = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True)+1e-9)
-        self._embeddings = emb.astype(np.float32)
 
         for a in articles:
             self._idToData[a["url"]] = a
@@ -122,11 +127,15 @@ class Graph():
         
         self.keyword_cleanup()
         self.store_graph()
+
+        self.infer_cluster_similarities()
+        self.store_clusters()
         
 
-    def write_cluster(self, path):
+    def store_clusters(self):
         """ write cluster dictionary to a field in json format for debugging """
-        p = pathlib.Path(path)
+
+        p = pathlib.Path(os.path.join("data","clusters.json"))
         with open(p,'w') as f:
             json.dump(self._clusterIds,f, indent=4)
         f.close()
@@ -190,6 +199,47 @@ class Graph():
         conn.commit()
         conn.close()
     
-    # def compute_cluster_sentences(self):
-    #     for cluster in self._clusterIds:
-    #         for url in cluster["articles"]:
+    def infer_cluster_similarities(self):
+        def has_entities(sent):
+            doc = nlp(sent)
+            return len(doc.ents)
+    
+        for cluster in self._clusterIds.values():
+            sentences = []
+            sentence_meta = {}
+            sentence_index = 0
+            for url in cluster["articles"]:
+                text = self._idToData[url]["content"]
+                res =  split_into_sentences(text)
+                for s in res:
+                    if len(s.split()) < 7:
+                        continue
+                    if has_entities(s)<2:
+                        continue
+                    sentences.append(s)
+                    sentence_meta[sentence_index] = url
+                    sentence_index += 1
+            
+            cluster["sentences"] = sentences
+            cluster["meta"] = sentence_meta
+        
+            sentence_embeddings = self._model.encode(sentences, normalize_embeddings=True)
+            similarity_matrix = cosine_similarity(sentence_embeddings)
+            
+            pairs = []
+            for i in range(len(sentences)):
+                url_i = sentence_meta[i]
+                for j in range(len(sentences)):
+                    url_j = sentence_meta[j]
+                    score = similarity_matrix[i][j]
+                    if url_i != url_j and score > 0.60:
+                        pairs.append((i,j, score))
+            
+            for i,j, score in pairs:
+                cluster["pairs"].append({
+                    "source": sentences[i],
+                    "source_url": sentence_meta[i],
+                    "match": sentences[j],
+                    "match_url": sentence_meta[j],
+                    "score": float(score)
+                })
