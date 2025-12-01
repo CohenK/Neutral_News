@@ -8,6 +8,5 @@ def clean_tables():
     conn.commit()
     conn.close()
 
-
 if __name__ == "__main__":
     clean_tables()

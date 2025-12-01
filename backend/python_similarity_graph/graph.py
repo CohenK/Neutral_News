@@ -1,57 +1,47 @@
 import numpy as np
 from collections import deque, defaultdict
-from sklearn.feature_extraction.text import TfidfVectorizer, ENGLISH_STOP_WORDS
 import spacy
+from spacy.tokens import Span
 import pathlib
 import json
 import os
-from sklearn.metrics.pairwise import cosine_similarity
 import sqlite3
 from utils import split_into_sentences
 from sentence_transformers import SentenceTransformer
+import re
 
 nlp = spacy.load("en_core_web_sm")
+nlp.disable_pipe("lemmatizer")
+nlp.disable_pipe("attribute_ruler")
+nlp.disable_pipe("senter")
 
-def noun_filter(text):
-    filtered = []
-    for doc in nlp.pipe(text, disable=["ner", "parser"]):
-        tokens = [t.lemma_ for t in doc if t.pos_ in {"NOUN","PROPN"}]
-        filtered.append(" ".join(tokens))
-    return filtered
 
 class Graph():
     def __init__(self, articles, thresh):
-        contents = [a["content"] for a in articles]
         self._model = SentenceTransformer("all-MiniLM-L6-v2")
-        embeddings = self._model.encode(contents, normalize_embeddings=True)        
+        urls = [a["url"] for a in articles]
+        contents = [a["content"] for a in articles]
+        embeddings = self._model.encode(contents, normalize_embeddings=True)
+        self._article_embedding = dict(zip(urls, embeddings))
         emb = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True)+1e-9)
-
         self._embeddings = emb.astype(np.float32)
         self._length = len(embeddings)
         self._adj = [dict() for _ in range(len(embeddings))]
-        self._idToInt = {}
-        self._intToId = []
+        self._id_to_int = {}
+        self._int_to_id = []
         self._thresh = thresh
-        self._idToData = {} # article url to article mapping
+        self._id_to_data = {} # article url to article mapping
         self._ids = [a["url"] for a in articles]
-        self._idToCluster= {} # article ID to cluster mapping
-        self._clusterIds = defaultdict(lambda: {"articles": [], "sentences": [], "meta": {},"pairs": []}) # list of article for each cluster and the cluster's similarity matrix
-        self._clusterKeywords = {}
+        self._id_to_cluster= {} # article ID to cluster mapping
+        self._cluster_ids = defaultdict(lambda: {"articles": [], "sentences": [], "meta": {},"pairs": []}) # list of article for each cluster and the cluster's similarity matrix
+        self._article_keywords = {}
 
         for a in articles:
-            self._idToData[a["url"]] = a
+            self._id_to_data[a["url"]] = a
 
         for i in self._ids:
-            self._intToId.append(i)
-            self._idToInt[f"{i}"] = len(self._intToId)-1 
-
-    @property
-    def idToCluster(self):
-        return self._idToCluster
-
-    @property
-    def clusterKeywords(self):
-        return self._clusterKeywords
+            self._int_to_id.append(i)
+            self._id_to_int[f"{i}"] = len(self._int_to_id)-1 
 
     def compute_edges(self):
         """ given an embedding arr compute adj graph based on threshhold val """
@@ -71,14 +61,12 @@ class Graph():
         visited = set()
         q = deque()
         cluster = 0
-        topk = 6
 
         # run until every id is assigned to a cluster
         for x in self._ids:
             if x in visited: # id is processed and assigned a cluster so skip
                 continue
 
-            text = []
             cluster += 1
             cid = f"c{cluster}"
             visited.add(x)
@@ -87,85 +75,83 @@ class Graph():
             # find all ids for current cluster using BFS
             while q:
                 curr = q.popleft()
-                i = self._idToInt[curr]
+                i = self._id_to_int[curr]
 
                 for j in self._adj[i].keys():
-                    neighbor = self._intToId[j]
+                    neighbor = self._int_to_id[j]
                     if neighbor not in visited:
                         visited.add(neighbor)
                         q.append(neighbor)
                         
                 # assign to current cluster since its connected
-                self._idToCluster[curr] = cid
-                # append article text to text for cluster keywords
-                text.append(self._idToData[curr]["content"])
+                self._id_to_cluster[curr] = cid
 
-            min_df_val = 1 if len(text) <= 3 else 2
-            max_df_val = 1.0 if len(text) <= 3 else 0.7
-            tf = TfidfVectorizer( 
-                stop_words = "english",
-                ngram_range = (2,3),
-                min_df = min_df_val,
-                max_df = max_df_val,
-                sublinear_tf = True,
-                norm = None
-            )
-
-            X = tf.fit_transform(text)
-
-            if X.shape[1] == 0:
-                # no keywords detected
-                self._clusterKeywords[cid] = ""
-            else:
-                scores = X.mean(axis=0).A1
-                top_idx = scores.argsort()[-topk:][::-1]
-                keywords = tf.get_feature_names_out()
-                self._clusterKeywords[cid] = ",".join(keywords[top_idx])
-
-        for key, val in self.idToCluster.items():
-            self._clusterIds[val]["articles"].append(key)
+        for key, val in self._id_to_cluster.items():
+            self._cluster_ids[val]["articles"].append(key)
         
-        self.keyword_cleanup()
+        self.compute_inferences()
         self.store_graph()
-
-        self.infer_cluster_similarities()
         self.store_clusters()
-        
 
     def store_clusters(self):
         """ write cluster dictionary to a field in json format for debugging """
 
         p = pathlib.Path(os.path.join("data","clusters.json"))
         with open(p,'w') as f:
-            json.dump(self._clusterIds,f, indent=4)
+            json.dump(self._cluster_ids,f, indent=4)
         f.close()
 
-    def keyword_cleanup(self):
-        """ clean keyword list for each cluster """
-        
-        unwanted = {'associated press', 'al jazeera', 'copyright 2025',
-                    "said", "say", "also", "would", "could", "might", 
-                    "according", "among", "within", "around", "between", 
-                    "said", 'copyright', 'aljazeera',''}
+        conn = sqlite3.connect("data/database.db")
+        cursor = conn.cursor()
+        batch_rows = []
+        sql = "INSERT INTO clusters (cluster_id, articles, sentences, meta) VALUES (?,?,?,?)"
 
+        for id, data in self._cluster_ids.items():
+            # batch add to database for performance
+            batch_rows.append((
+                id,
+                json.dumps(data["articles"]),
+                json.dumps(data["sentences"]),
+                json.dumps(data["meta"]),
+            ))
+        cursor.executemany(sql, batch_rows)
 
-        for cid, cluster in list(self._clusterKeywords.items()):
-            #remove non nouns and pronouns
-            cluster = noun_filter(cluster.split(","))
-            #filter unwanted phrases
-            cluster = set(filter(lambda x: x not in unwanted, cluster))
-            self._clusterKeywords[cid] = cluster
+        batch_rows = []
+        sql = "INSERT INTO pairs (cluster_id, source_sentence, source_url, match_sentence, match_url, score) VALUES (?,?,?,?,?,?)"
+
+        for id, data in self._cluster_ids.items():
+            for p in data["pairs"]:
+                # batch add to database for performance
+                batch_rows.append((
+                    id,
+                    p["source"],
+                    p["source_url"],
+                    p["match"],
+                    p["match_url"],
+                    p["score"]
+                ))
+        cursor.executemany(sql, batch_rows)
+
+        conn.commit()
+        conn.close()
+
     
     def store_graph(self):
-        """ format collected and computed data of each article and add to the database.json file """
+        """ format collected and computed data of each article and add to the database.db file """
+
+        # json output for debugging purposes
+        p = pathlib.Path(os.path.join("data","articles.json"))
+        with open(p,'w') as f:
+            json.dump(self._id_to_data,f, indent=4)
+        f.close()
         
         conn = sqlite3.connect("data/database.db")
         cursor = conn.cursor()
         batch_rows = []
-        sql = "INSERT INTO articles (url, site, title, text, images, labels, score, cluster_id, cluster_keywords) VALUES (?,?,?,?,?,?,?,?,?)"
+        sql = "INSERT INTO articles (url, site, title, text, images, labels, score, cluster_id, article_keywords) VALUES (?,?,?,?,?,?,?,?,?)"
 
         for id in self._ids:
-            data = self._idToData[id]
+            data = self._id_to_data[id]
             url = data["url"]
             site = ""
             if "bbc.co" in url:
@@ -181,8 +167,9 @@ class Graph():
             else:
                 site = "APNews"
 
-            cluster_id = self._idToCluster[id]
+            cluster_id = self._id_to_cluster[id]
 
+            # batch add to database for performance
             batch_rows.append((
                 url,
                 site,
@@ -192,54 +179,121 @@ class Graph():
                 data["labels"],
                 data["score"],
                 cluster_id,
-                ",".join(self._clusterKeywords[cluster_id])
+                json.dumps(self._article_keywords[url])
             ))
 
         cursor.executemany(sql, batch_rows)
         conn.commit()
         conn.close()
     
-    def infer_cluster_similarities(self):
-        def has_entities(sent):
-            doc = nlp(sent)
-            return len(doc.ents)
-    
-        for cluster in self._clusterIds.values():
-            sentences = []
-            sentence_meta = {}
-            sentence_index = 0
-            for url in cluster["articles"]:
-                text = self._idToData[url]["content"]
-                res =  split_into_sentences(text)
-                for s in res:
-                    if len(s.split()) < 7:
-                        continue
-                    if has_entities(s)<2:
-                        continue
-                    sentences.append(s)
-                    sentence_meta[sentence_index] = url
-                    sentence_index += 1
-            
-            cluster["sentences"] = sentences
-            cluster["meta"] = sentence_meta
+    def compute_inferences(self):
+        """ generate pairs of sentences across articles that have similar meaning for each cluster and also generate keywords for every article """
         
-            sentence_embeddings = self._model.encode(sentences, normalize_embeddings=True)
-            similarity_matrix = cosine_similarity(sentence_embeddings)
+        STOPWORDS = set(["the", "this", "that", "it", "they", "he", "she", "we", "you", "i", "a", "an"])
+        spacy_cache = {}
+        def get_doc(s):
+            if s not in spacy_cache:
+                spacy_cache[s] = nlp(s)
+            return spacy_cache[s]
+        
+        def entities(sentence):
+            doc = get_doc(sentence)
+            return len(doc.ents)
+        
+        def clean_phrase(p):
+            p = p.strip().lower()
+            p = re.sub(r"[\s\n]+", " ", p)
+            return p
+        
+        def good_phrase(p):
+            words = p.split()
+            if len(words) < 1 or len(words) > 6:
+                return False
+            if all(w in STOPWORDS for w in words):
+                return False
+            return True
+                
+    
+        for cluster in self._cluster_ids.values():
+            cluster_sentences = []  # list of sentences for cluster
+            cluster_embeddings = [] # list of embeddings for all sentences for all articles in cluster
+            cluster_sentence_meta = {} # maps sentence index to article url for cross article recognition
+
+            for url in cluster["articles"]:
+                # generate embeddings of sentences from articles within same cluster only for pairwise similarity
+                # also generate keywords for articles within the same loop
+                text = self._id_to_data[url]["content"]
+                res =  split_into_sentences(text)
+
+                article_sentences = [s for s in res if len(s.split()) >= 7 and entities(s) >= 2]
+                sentence_embeddings = self._model.encode(article_sentences,normalize_embeddings=True)
+
+                # similarity of sentence embedding to article embedding
+                article_embedding_vector = np.atleast_2d(self._article_embedding[url])
+                significance_scores = (article_embedding_vector @ sentence_embeddings.T)[0]
+
+                top_k = min(5,len(article_sentences))
+                top_sentence_inidices = np.argsort(significance_scores)[-top_k:]
+                top_sentences = [article_sentences[i] for i in top_sentence_inidices]
+
+                # find candidates for keywords for each article and fallbacks
+                candidates = set()
+                for s in top_sentences:
+                    doc = get_doc(s)
+                    for chunk in doc.noun_chunks:
+                        phrase = clean_phrase(chunk.text)
+                        if good_phrase(phrase):
+                            candidates.add(phrase)
+                if len(candidates) < 3:
+                    for ent in doc.ents:
+                        phrase = clean_phrase(ent.text)
+                        if good_phrase(phrase):
+                            candidates.add(phrase)
+                if not candidates:
+                    for s in top_sentences:
+                        for w in s.split():
+                            w = clean_phrase(w)
+                            if good_phrase(w) and len(w) > 3:
+                                candidates.add(w)
+
+                # remove potential keywords that were just a number
+                candidates = [c for c in candidates if not c.isnumeric()] 
+                candidate_embeddings = self._model.encode(candidates, normalize_embeddings=True)
+                keyword_scores = (article_embedding_vector @ candidate_embeddings.T)[0]
+                # choose top 10 keywords that resembles the articles the most via their embedding scores
+                ranked_scores = sorted(zip(candidates, keyword_scores), key = lambda x: x[1], reverse=True)
+                self._article_keywords[url] = [keyword for keyword, _ in ranked_scores[:10]]
+                
+                start = len(cluster_sentences)
+                cluster_sentences.extend(article_sentences)
+                cluster_embeddings.extend(sentence_embeddings)
+                for i in range(len(article_sentences)):
+                    cluster_sentence_meta[start + i] = url
+
             
+            cluster_embeddings = np.array(cluster_embeddings)
+            similarity_matrix = cluster_embeddings @ cluster_embeddings.T
+
+            # collect data for cluster data structure
             pairs = []
-            for i in range(len(sentences)):
-                url_i = sentence_meta[i]
-                for j in range(len(sentences)):
-                    url_j = sentence_meta[j]
+            for i in range(len(cluster_sentences)):
+                url_i = cluster_sentence_meta[i]
+                for j in range(len(cluster_sentences)):
+                    if i == j:
+                        continue
+                    url_j = cluster_sentence_meta[j]
                     score = similarity_matrix[i][j]
                     if url_i != url_j and score > 0.60:
                         pairs.append((i,j, score))
             
+            cluster["sentences"] = cluster_sentences
+            cluster["meta"] = cluster_sentence_meta
+            # store pairs for later use in frontend
             for i,j, score in pairs:
                 cluster["pairs"].append({
-                    "source": sentences[i],
-                    "source_url": sentence_meta[i],
-                    "match": sentences[j],
-                    "match_url": sentence_meta[j],
+                    "source": cluster_sentences[i],
+                    "source_url": cluster_sentence_meta[i],
+                    "match": cluster_sentences[j],
+                    "match_url": cluster_sentence_meta[j],
                     "score": float(score)
                 })
