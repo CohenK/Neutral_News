@@ -6,6 +6,7 @@ import About from "./about.tsx";
 import Disclosure from "./disclosure.tsx";
 import NotFound from "./NotFound.tsx";
 import Home from "./Home.tsx";
+import Article from "./Article.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "about", element: <About /> },
       { path: "disclosure", element: <Disclosure /> },
+      { path: "article", element: <Article /> },
     ],
   },
 ]);
