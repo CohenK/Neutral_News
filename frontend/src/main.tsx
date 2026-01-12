@@ -2,14 +2,14 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import About from "./about.tsx";
-import Disclosure from "./disclosure.tsx";
+import About from "./About.tsx";
+import Disclosure from "./Disclosure.tsx";
 import NotFound from "./NotFound.tsx";
 import Home from "./Home.tsx";
 import Article from "./Article.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,

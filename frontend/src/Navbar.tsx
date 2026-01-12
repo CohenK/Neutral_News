@@ -12,12 +12,12 @@ function Navbar() {
   };
 
   return (
-    <div className="bg-gray-700 flex items-center justify-between w-full h-[4rem] text-[1.5rem] ">
+    <div className="bg-gray-700 flex items-center justify-between w-full h-[4rem] text-[1.5rem] font-[]">
       <div className="flex mx-3 h-full">
         <Link to={"/"} className="h-full flex items-center">
           <img
             className="h-[80%] w-auto object-contain max-w-full"
-            src="/NeutralNewsLogo.png"
+            src={`${import.meta.env.BASE_URL}NeutralNewsLogo.png`}
             alt=""
           />
         </Link>
@@ -37,7 +37,7 @@ function Navbar() {
           <button className="h-full flex px-2 bg-gray-400" type="submit">
             <img
               className="w-auto object-contain max-w-full max-h-full"
-              src="/SearchIcon.png"
+              src={`${import.meta.env.BASE_URL}SearchIcon.png`}
               alt=""
             />
           </button>

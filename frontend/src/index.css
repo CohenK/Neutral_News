@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  --color-paper-main: #f4f1ec;
+  --color-paper-alt: #efe6d8;
+  --color-ink-main: #1f1f1d;
+  --color-ink-soft: #3a3a36;
+  --color-ink-faded: #6b6b63;
+  --color-accent-red: #8b2e2e;
+  --color-accent-blue: #2f4a5c;
+  --color-rule-light: #c6bfaf;
+  --color-rule-heavy: #a8a08e;
+}
+
 :root {
   background: rgb(81, 80, 80);
   color: rgb(232, 232, 232);
