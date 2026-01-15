@@ -85,7 +85,7 @@ line_patterns_specific = [
 ]
 
 inline_patterns = [
-    # "first published date"
+    # first published date
     re.compile(r'(?i)\bfirst\s+published\s+on\s+(?:\d{1,2}\s+\w+\s+\d{4}|\w+\s+\d{1,2},?\s+\d{4})\.?'),
 
     re.compile(r'(?i)\bedited\s+by\s+[A-Z][\w\s\.-]+[.,]?'),
@@ -105,7 +105,7 @@ inline_patterns = [
     re.compile(r'(?i)not\s+immediately\s+available\s+for\s+comment'),
     re.compile(r'(?i)according\s+to\s+the\s+statement'),
     re.compile(r'(?i)in\s+an\s+emailed\s+statement'),
-    re.compile(r'(?i)as\s+of\s+press\s+time')
+    re.compile(r'(?i)as\s+of\s+press\s+time'),
 ]
 
 # less aggressive to avoid over deletion
@@ -190,6 +190,18 @@ def clean_img_srcs(url, srcs):
     else:
         return unique_sources
 
+def clean_title(title):
+    """ clean up titles of articles for frontend UI """
+    reg = re.compile(
+        r'(?i)\s*(\|\s*(PBS News|Al Jazeera|AP News)'
+        r'|:\s*NPR'
+        r'|[-–]\s*DW(\s*[-–]\s*\d{1,2}/\d{1,2}/\d{4})?)\s*$'
+    )
+    title = title.replace("—", "–").replace("-", "–")
+
+    return normalize_whitespace(reg.sub('', title))
+
+
 def append_to_json_array(path, obj):
     """ write all article json data for debugging purposes """
     p = pathlib.Path(path)
@@ -226,6 +238,7 @@ def extract_dir_data(dir_path):
         with open(filepath, 'r', encoding='utf-8', errors='strict') as f:
             data = json.load(f)
         # clean article data by replacing newlines with spaces
+        data["title"] = clean_title(data["title"])
         data["content"] = clean_article(data["content"])
         data["images"] = clean_img_srcs(data["url"], data["images"])
         result.append(data)
