@@ -16,3 +16,12 @@
   background: rgb(81, 80, 80);
   color: rgb(232, 232, 232);
 }
+/* IE / Edge / Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* Chrome / Safari */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
