@@ -172,11 +172,8 @@ class Graph():
         STOPWORDS = set(["the", "this", "that", "it", "they", "he", "she", "we", "you", "i", "a", "an"])
         FACT_ENTS = {"PERSON","ORG","GPE","LOC","NORP","EVENT","WORK_OF_ART","PRODUCT"}
         
-        def clean_phrase(p):
-            p = p.strip().lower()
-            p = re.sub(r"[\s\n]+", " ", p)
-            return p
-        
+        def normalize_text(s: str) -> str:
+            return " ".join(s.lower().split())
         def good_phrase(p):
             words = p.split()
             if len(words) < 1 or len(words) > 6:
@@ -184,24 +181,17 @@ class Graph():
             if all(w in STOPWORDS for w in words):
                 return False
             return True
-        
-        def norm_ent(t: str) -> str:
-            return re.sub(r"\s+", " ", t.strip().lower())
-        
         def facty(i, j):
-            if ents_set[i] and ents_set[j] and (ents_set[i] & ents_set[j]):
+            if entities_set[i] and entities_set[j] and (entities_set[i] & entities_set[j]):
                 return True
-            if num_set[i] and num_set[j] and (num_set[i] & num_set[j]):
+            if numbers_set[i] and numbers_set[j] and (numbers_set[i] & numbers_set[j]):
                 return True
             return False
-        
+        # check phrases for proper nouns for keyword candidates
         def is_facty_chunk(chunk):
-            # requires parser, which you have
-            has_propn = any(t.pos_ == "PROPN" for t in chunk)
-            has_num = any(t.like_num for t in chunk)
+            has_propn = any(token.pos_ == "PROPN" for token in chunk)
             long_enough = len(chunk.text.split()) >= 2
-            return long_enough and (has_propn or has_num)
-
+            return long_enough and has_propn
         def fact_bonus(phrase: str) -> float:
             bonus = 0.0
             if re.search(r"\b\d", phrase):
@@ -211,71 +201,64 @@ class Graph():
             return bonus
     
         for cluster in self._cluster_ids.values():
-            cluster_sentence_meta = [] # maps sentence index to article url for cross article recognition
+            candidate_sentences = []
+            cluster_sentence_meta = [] # maps candidate_sentence index to article url for cross article recognition
+            # global list of entities and numbers per sentence in order of candidate_sentences for sentence matching
+            entities_set = [] 
+            numbers_set = []
+            sentence_spans = {}
 
-            ents_set = []
-            num_set = []
-
-            all_sentences = []
-            spans = {}
-            # breaking up the logic into multiple for loops so that embeddings can happen all at once rather than per url for performance
+            # breaking up logic into multiple for loops to enable batch mbeddings for performance
             for url in cluster["articles"]:
-                # generate embeddings of sentences from articles within same cluster only for pairwise similarity
-                # also generate keywords for articles within the same loop
-                res = split_into_sentences(self._id_to_data[url]["content"])
-
-                docs = list(nlp.pipe(res, batch_size=128))
+                # first loop filters out good sentences, groups them by articles and sets up everything for later for loops
+                article_sentences = split_into_sentences(self._id_to_data[url]["content"])
+                good_sentences = []
+                article_entities = []
+                article_numbers = []
                 
-                article_sentences = []
-                article_ents = []
-                article_nums = []
-                
-                for s, d in zip(res, docs):
+                for s, d in zip(article_sentences, nlp.pipe(article_sentences, batch_size=128)):
                     if len(d) >= 7 and len(d.ents) >= 2:
-                        article_sentences.append(s)
-
-                        ents = {
-                            norm_ent(e.text)
+                        good_sentences.append(s)
+                        entities = {
+                            normalize_text(e.text)
                             for e in d.ents
                             if e.label_ in ("PERSON","ORG","GPE","LOC","NORP","EVENT","PRODUCT")
                         }
-                        article_ents.append(ents)
-
+                        article_entities.append(entities)
                         nums = set(re.findall(r"\b\d+(?:[\.,]\d+)?\b", d.text))
-                        article_nums.append(nums)
+                        article_numbers.append(nums)
 
                 # extend cluster-global arrays in the SAME order
-                start = len(all_sentences)
-                all_sentences.extend(article_sentences)
-                end = len(all_sentences)
-                spans[url] = (start, end)
+                start = len(candidate_sentences)
+                candidate_sentences.extend(good_sentences) # we only want to embed sentences that might be meaningful
+                end = len(candidate_sentences)
+                sentence_spans[url] = (start, end)
 
-                cluster_sentence_meta.extend([url] * len(article_sentences))
-                ents_set.extend(article_ents)
-                num_set.extend(article_nums)
+                cluster_sentence_meta.extend([url] * len(good_sentences))
+                entities_set.extend(article_entities)
+                numbers_set.extend(article_numbers)
             
-            all_embeddings = self._model.encode(all_sentences, normalize_embeddings=True, batch_size=64, show_progress_bar=False)
-            all_embeddings = all_embeddings.astype(np.float32)
-
+            all_embeddings = self._model.encode(candidate_sentences, normalize_embeddings=True, batch_size=64, show_progress_bar=False).astype(np.float32)
             all_top_sentences = []
             top_sentences_span = {}
+
             for url in cluster["articles"]:
-                start, end = spans[url]
-                # sentences and embeddings for just this article
-                article_sentences = all_sentences[start:end] 
-                sentence_embeddings = all_embeddings[start:end]     
+                # second loop finds representative sentences per article for later keyword extraction and cross article similarities
+                start, end = sentence_spans[url]
+                article_sentences = candidate_sentences[start:end] 
+                article_sentence_embeddings = all_embeddings[start:end]     
 
-                # similarity of sentence embedding to article embedding
                 article_embedding_vector = np.atleast_2d(self._article_embedding[url])
-                significance_scores = (article_embedding_vector @ sentence_embeddings.T)[0]
+                significance_scores = (article_embedding_vector @ article_sentence_embeddings.T)[0] # significance of sentence to article 
 
+                # insert dummy values so code doesn't break for empty articles
                 if len(article_sentences) == 0:
                     top_sentences_span[url] = (len(all_top_sentences), len(all_top_sentences))
                     continue
 
                 top_k = min(5,len(article_sentences))
-                top_sentence_inidices = np.argpartition(significance_scores, -top_k)[-top_k:]
-                top_sentences = [article_sentences[i] for i in top_sentence_inidices]
+                top_sentence_indices = np.argpartition(significance_scores, -top_k)[-top_k:]
+                top_sentences = [article_sentences[i] for i in top_sentence_indices]
 
                 top_sentences_start = len(all_top_sentences)
                 all_top_sentences.extend(top_sentences)
@@ -286,9 +269,8 @@ class Graph():
             all_candidates = []
             candidates_map = {} # map each url to a list of candidates
 
-            
             for url in cluster["articles"]:
-                # find candidates for keywords for each article and fallbacks
+                # find, collect and map candidates for keywords for each article
                 candidates = set()
                 start, end = top_sentences_span[url]
                 top_docs = all_top_docs[start:end]
@@ -297,47 +279,39 @@ class Graph():
                 for doc in top_docs:
                     for chunk in doc.noun_chunks:
                         if is_facty_chunk(chunk):
-                            phrase = clean_phrase(chunk.text)
+                            phrase = normalize_text(chunk.text)
                             if good_phrase(phrase):
                                 candidates.add(phrase)
-                    for ent in doc.ents:
-                        if ent.label_ in FACT_ENTS:
-                            phrase = clean_phrase(ent.text)
+                    for entities in doc.ents:
+                        if entities.label_ in FACT_ENTS:
+                            phrase = normalize_text(entities.text)
                             if good_phrase(phrase):
                                 candidates.add(phrase)
-                    for tok in doc:
-                        if tok.like_num:
+                    for token in doc:
+                        if token.like_num:
                             # take a small window around the number
-                            left = doc[max(tok.i-2, 0):tok.i]
-                            right = doc[tok.i+1:min(tok.i+3, len(doc))]
-                            phrase = clean_phrase(left.text + " " + tok.text + " " + right.text)
+                            left = doc[max(token.i-2, 0):token.i]
+                            right = doc[token.i+1:min(token.i+3, len(doc))]
+                            phrase = normalize_text(left.text + " " + token.text + " " + right.text)
                             if good_phrase(phrase):
                                 candidates.add(phrase)
 
-                if len(candidates) < 3:
+                # fall back candidate generation if above filters were too strict
+                if not candidates or len(candidates) < 3:
                     for doc in top_docs:
-                        for ent in doc.ents:
-                            phrase = clean_phrase(ent.text)
+                        for entitiy in doc.ents:
+                            phrase = normalize_text(entitiy.text)
                             if good_phrase(phrase):
                                 candidates.add(phrase)
-                if not candidates:
-                    for s in top_sentences:
-                        for w in s.split():
-                            w = clean_phrase(w)
-                            if good_phrase(w) and len(w) > 3:
-                                candidates.add(w)
-                # remove potential keywords that were just a number
-                candidates = [c for c in candidates if not c.isnumeric()]
+
+                candidates = [c for c in candidates if not c.isnumeric()] # numbers by themselves have no meaning
                 candidates_map[url] = candidates
                 all_candidates.extend(candidates)
                  
-            cluster_sentences = all_sentences
-            cluster_embeddings = all_embeddings
-            similarity_matrix = cluster_embeddings @ cluster_embeddings.T
-
-            unique_candidates = list(dict.fromkeys(all_candidates))
-            all_candidate_embeddings = self._model.encode(unique_candidates, normalize_embeddings=True, batch_size=128, show_progress_bar=False).astype(np.float32)
-            candidate_index = {c: i for i, c in enumerate(unique_candidates)}
+            similarity_matrix = all_embeddings @ all_embeddings.T
+            all_candidates = list(dict.fromkeys(all_candidates)) # create a unique list
+            all_candidate_embeddings = self._model.encode(all_candidates, normalize_embeddings=True, batch_size=128, show_progress_bar=False).astype(np.float32)
+            candidate_index = {c: i for i, c in enumerate(all_candidates)}
 
             for url in cluster["articles"]:
                 candidates = candidates_map[url]
@@ -348,27 +322,29 @@ class Graph():
                 candidate_embeddings = all_candidate_embeddings[idx]
                 article_embedding_vector = np.atleast_2d(self._article_embedding[url])
                 keyword_scores = (article_embedding_vector @ candidate_embeddings.T)[0]
-                # choose top 10 keywords that resembles the articles the most via their embedding scores
+
+                # favor keywords that are longer and have numbers to represent the article based on embedding scores
                 ranked_scores = sorted(((c, float(s) + fact_bonus(c)) for c, s in zip(candidates, keyword_scores)), key = lambda x: x[1], reverse=True)
                 self._article_keywords[url] = [keyword for keyword, _ in ranked_scores[:10]]
-            # collect data for cluster data structure
+
+            # pairs of sentences with higher scores from different articles connect articles so find and keep them
             pairs = []
-            for i in range(len(cluster_sentences)):
+            for i in range(len(candidate_sentences)):
                 url_i = cluster_sentence_meta[i]
-                for j in range(i+1, len(cluster_sentences)):
+                for j in range(i+1, len(candidate_sentences)):
                     url_j = cluster_sentence_meta[j]
                     score = similarity_matrix[i][j]
                     if url_i != url_j and score > 0.60 and facty(i, j):
                         pairs.append((i,j, score))
             
-            cluster["sentences"] = cluster_sentences
-            cluster["meta"] = cluster_sentence_meta
+            # cluster["sentences"] = candidate_sentences
+            # cluster["meta"] = cluster_sentence_meta
             # store pairs for later use in frontend
             for i,j, score in pairs:
                 cluster["pairs"].append({
-                    "source": cluster_sentences[i],
+                    "source": candidate_sentences[i],
                     "source_url": cluster_sentence_meta[i],
-                    "match": cluster_sentences[j],
+                    "match": candidate_sentences[j],
                     "match_url": cluster_sentence_meta[j],
                     "score": float(score)
                 })
