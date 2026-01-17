@@ -30,7 +30,7 @@ class Graph():
         self._id_to_data = {} # article url to article mapping
         self._ids = [a["url"] for a in articles]
         self._id_to_cluster= {} # article ID to cluster mapping
-        self._cluster_ids = defaultdict(lambda: {"articles": [], "sentences": [], "meta": {},"pairs": []}) # list of article for each cluster and the cluster's similarity matrix
+        self._cluster_ids = defaultdict(lambda: {"articles": [],"pairs": []}) # list of article for each cluster and the cluster's similarity matrix
         self._article_keywords = {}
 
         for a in articles:
@@ -105,8 +105,6 @@ class Graph():
             cluster_obj = {
                 "cluster_id": id,
                 "articles": data["articles"],
-                "sentences": data["sentences"],
-                "meta": data["meta"]
             }
             append_to_json_array(clusters_path,cluster_obj)
 
