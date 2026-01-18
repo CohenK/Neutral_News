@@ -160,7 +160,7 @@ class Graph():
                 "labels": data["labels"],
                 "score": data["score"],
                 "cluster_id": self._id_to_cluster[id],
-                "article_keywords": json.dumps(self._article_keywords[url])
+                "article_keywords": self._article_keywords[url]
             }
             append_to_json_array(p, obj)
     
