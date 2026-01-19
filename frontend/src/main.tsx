@@ -7,6 +7,7 @@ import Disclosure from "./Disclosure.tsx";
 import NotFound from "./NotFound.tsx";
 import Home from "./Home.tsx";
 import Article from "./Article.tsx";
+import Results from "./Results.tsx";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 const router = createHashRouter([
@@ -16,9 +17,10 @@ const router = createHashRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
+      { path: "results", element: <Results /> },
+      { path: "article", element: <Article /> },
       { path: "about", element: <About /> },
       { path: "disclosure", element: <Disclosure /> },
-      { path: "article", element: <Article /> },
     ],
   },
 ]);

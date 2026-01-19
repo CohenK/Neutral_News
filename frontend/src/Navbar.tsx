@@ -7,7 +7,9 @@ function Navbar() {
   const navigate = useNavigate();
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate(`/article?q=${encodeURIComponent(search)}`);
+    if (search != "") {
+      navigate(`/results?q=${encodeURIComponent(search)}`);
+    }
     setSearch("");
   };
 
