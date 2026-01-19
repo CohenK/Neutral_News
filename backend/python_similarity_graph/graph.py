@@ -138,9 +138,9 @@ class Graph():
             url = data["url"]
             site = ""
             if "bbc.co" in url:
-                site = "bbc"
+                site = "BBC"
             elif "aljazeera.com" in url:
-                site = "aljazeera"
+                site = "Al Jazeera"
             elif "dw.com" in url:
                 site = "Deutsche Welle"
             elif "npr.org" in url:
@@ -283,14 +283,6 @@ class Graph():
                     for entities in doc.ents:
                         if entities.label_ in FACT_ENTS:
                             phrase = normalize_text(entities.text)
-                            if good_phrase(phrase):
-                                candidates.add(phrase)
-                    for token in doc:
-                        if token.like_num:
-                            # take a small window around the number
-                            left = doc[max(token.i-2, 0):token.i]
-                            right = doc[token.i+1:min(token.i+3, len(doc))]
-                            phrase = normalize_text(left.text + " " + token.text + " " + right.text)
                             if good_phrase(phrase):
                                 candidates.add(phrase)
 
