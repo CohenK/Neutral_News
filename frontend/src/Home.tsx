@@ -1,36 +1,9 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Preview from "./Preview";
-import type { Article } from "./types";
+import { useOutletContext } from "react-router-dom";
+import type { Article, AppCtx } from "./types";
 
 function Home() {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    const BASE = import.meta.env.BASE_URL;
-
-    async function load() {
-      try {
-        const res = await fetch(`${BASE}data/articles.json`);
-        if (!res.ok) throw new Error(res.statusText);
-
-        const data = await res.json();
-        if (!cancelled) setArticles(data);
-      } catch (err) {
-        console.error("Failed to load articles", err);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+  const { articles, loading } = useOutletContext<AppCtx>();
   if (loading) return <div>Loading…</div>;
 
   return (

@@ -1,45 +1,23 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import type { Article } from "./types";
+import { useSearchParams, useOutletContext } from "react-router-dom";
+import type { Article, AppCtx } from "./types";
 import Preview from "./Preview";
 
 function Results() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { articles, loading } = useOutletContext<AppCtx>();
+  const [results, setResults] = useState<Article[]>([]);
 
   useEffect(() => {
-    setLoading(true);
-    let cancelled = false;
-    const BASE = import.meta.env.BASE_URL;
+    const filtered = articles.filter(
+      (a: Article) =>
+        a.title.toLowerCase().includes(query!.toLowerCase()) ||
+        a.article.toLowerCase().includes(query!.toLowerCase())
+    );
+    setResults(filtered);
 
-    async function load() {
-      try {
-        const res = await fetch(`${BASE}data/articles.json`);
-        if (!res.ok) throw new Error(res.statusText);
-
-        const data = await res.json();
-
-        if (!cancelled) {
-          const filtered = data.filter(
-            (d: Article) =>
-              d.title.toLowerCase().includes(query!.toLowerCase()) ||
-              d.article.toLowerCase().includes(query!.toLowerCase())
-          );
-          setArticles(filtered);
-        }
-      } catch (err) {
-        console.error("Failed to load articles", err);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
+    return () => {};
   }, [query]);
 
   if (loading) return <div>Loading…</div>;
@@ -51,7 +29,7 @@ function Results() {
       </div>
       <div className="min-h-0 mx-10 overflow-y-auto no-scrollbar">
         <ul className="space-y-7">
-          {articles.map((article: Article, index) => (
+          {results.map((article: Article, index) => (
             <li key={index} className="font-bold">
               <Preview article={article} index={index} />
             </li>

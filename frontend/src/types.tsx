@@ -9,3 +9,8 @@ export type Article = {
   cluster_id: String;
   article_keywords: String[];
 };
+
+export type AppCtx = {
+  articles: Article[];
+  loading: boolean;
+};
