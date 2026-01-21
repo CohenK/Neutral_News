@@ -1,13 +1,13 @@
 export type Article = {
-  url: String;
-  site: String;
-  title: String;
-  article: String;
-  images: String[];
-  labels: String;
+  url: string;
+  site: string;
+  title: string;
+  article: string;
+  images: string[];
+  labels: string;
   score: Number;
-  cluster_id: String;
-  article_keywords: String[];
+  cluster_id: string;
+  article_keywords: string[];
 };
 
 export type AppCtx = {

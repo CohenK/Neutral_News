@@ -11,8 +11,10 @@ function Preview({ article, index }: { article: Article; index: number }) {
       </div>
       <div className="text-accent-red text-[1.5rem]">{article.site}</div>
       <div className="flex flex-wrap gap-3">
-        {article.article_keywords.map((keyword: String) => (
-          <div className="text-ink-main text-[1rem]">[{keyword}]</div>
+        {article.article_keywords.map((keyword: string) => (
+          <div key={keyword} className="text-ink-main text-[1rem]">
+            [{keyword}]
+          </div>
         ))}
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useOutletContext } from "react-router-dom";
 import type { Article, AppCtx } from "./types";
 import Preview from "./Preview";
+import { Link } from "react-router-dom";
 
 function Results() {
   const [searchParams] = useSearchParams();
@@ -23,11 +24,15 @@ function Results() {
   if (loading) return <div>Loading…</div>;
 
   return (
-    <div className="flex flex-col bg-paper-main h-[calc(100vh-4rem)] overflow-hidden max-w-[75%] mx-auto">
-      <div className="flex content-center justify-start text-[3rem] text-ink-main mx-10">
-        Results for: "{query}"
+    <div className="flex flex-col bg-paper-main h-[calc(100vh-4rem)] overflow-hidden max-w-[75%] mx-auto px-10">
+      <div className="text-[3rem] text-ink-main">Results for: "{query}"</div>
+      <div className="text-accent-blue text-[1.25rem] my-2">
+        <Link className="py-1 px-2 border" to={"/"}>
+          &lt;&lt;&lt; Back
+        </Link>
       </div>
-      <div className="min-h-0 mx-10 overflow-y-auto no-scrollbar">
+
+      <div className="min-h-0 overflow-y-auto no-scrollbar">
         <ul className="space-y-7">
           {results.map((article: Article, index) => (
             <li key={index} className="font-bold">
