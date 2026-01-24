@@ -3,6 +3,7 @@ import type { Article } from "./types";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./Navbar";
+import Loading from "./Loading";
 
 function App() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -38,13 +39,13 @@ function App() {
         } else {
           setArticles([]);
           console.error(
-            "Failed to load articles, please try refreshing your browse"
+            "Failed to load articles, please try refreshing your browse",
           );
         }
       } catch (err) {
         console.error(
           "Failed to load articles, please try refreshing your browse",
-          err
+          err,
         );
         sessionStorage.removeItem(KEY);
       } finally {
@@ -58,13 +59,13 @@ function App() {
     };
   }, []);
 
-  if (loading) return <div>Loading…</div>;
-
   return (
     <div className="flex flex-col min-h-screen font-['Times_New_Roman',Times,serif]">
       <Navbar />
       <div className="flex-1 bg-[url('/NeutralNewsBG.png')] bg-left-top">
-        <Outlet context={{ articles, loading }} />
+        <div className="flex bg-paper-main h-[calc(100vh-4rem)] max-w-[75%] mx-auto">
+          {loading ? <Loading /> : <Outlet context={{ articles, loading }} />}
+        </div>
       </div>
     </div>
   );
