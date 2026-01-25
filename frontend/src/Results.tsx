@@ -14,7 +14,7 @@ function Results() {
     const filtered = articles.filter(
       (a: Article) =>
         a.title.toLowerCase().includes(query!.toLowerCase()) ||
-        a.article.toLowerCase().includes(query!.toLowerCase())
+        a.article.toLowerCase().includes(query!.toLowerCase()),
     );
     setResults(filtered);
 
@@ -28,7 +28,7 @@ function Results() {
       <div className="text-[3rem] text-ink-main">Results for: "{query}"</div>
       <div className="text-accent-blue text-[1.25rem] my-2">
         <Link className="py-1 px-2 border" to={"/"}>
-          &lt;&lt;&lt; Back
+          &lt;&lt;&lt; All Articles
         </Link>
       </div>
 

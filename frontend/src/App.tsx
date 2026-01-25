@@ -63,9 +63,7 @@ function App() {
     <div className="flex flex-col min-h-screen font-['Times_New_Roman',Times,serif]">
       <Navbar />
       <div className="flex-1 bg-[url('/NeutralNewsBG.png')] bg-left-top">
-        <div className="flex bg-paper-main h-[calc(100vh-4rem)] max-w-[75%] mx-auto">
-          {loading ? <Loading /> : <Outlet context={{ articles, loading }} />}
-        </div>
+        {loading ? <Loading /> : <Outlet context={{ articles, loading }} />}
       </div>
     </div>
   );

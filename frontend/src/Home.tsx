@@ -11,7 +11,7 @@ function Home() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex flex-col h-[calc(100vh-4rem)] overflow-hidden">
+        <div className="flex flex-col bg-paper-main h-[calc(100vh-4rem)] overflow-hidden max-w-[75%] mx-auto">
           <div className="flex content-center justify-center text-[5rem] text-ink-main">
             Daily Articles
           </div>

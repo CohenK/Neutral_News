@@ -5,7 +5,7 @@ export type Article = {
   article: string;
   images: string[];
   labels: string;
-  score: Number;
+  score: number;
   cluster_id: string;
   article_keywords: string[];
 };
