@@ -91,7 +91,7 @@ class Graph():
         self.store_clusters()
 
     def store_clusters(self):
-        """ write cluster dictionary to a field in json format for debugging """
+        """ write cluster dictionary to a field in json format """
         
         base_dir = pathlib.Path(__file__).resolve().parent
         pair_path = pathlib.Path(os.path.join(base_dir,"data","pairs.json"))
@@ -101,12 +101,10 @@ class Graph():
         if pair_path.exists(): os.remove(pair_path) 
         if clusters_path.exists(): os.remove(clusters_path)
 
+        cluster_obj = {}
         for id, data in self._cluster_ids.items():
-            cluster_obj = {
-                "cluster_id": id,
-                "articles": data["articles"],
-            }
-            append_to_json_array(clusters_path,cluster_obj)
+            cluster_obj[id] = data["articles"]
+        clusters_path.write_text(json.dumps(cluster_obj, ensure_ascii=False, indent=2), encoding="utf-8")
 
         count = 0
         for id, data in self._cluster_ids.items():
