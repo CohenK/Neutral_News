@@ -6,7 +6,7 @@ import About from "./About.tsx";
 import Disclosure from "./Disclosure.tsx";
 import NotFound from "./NotFound.tsx";
 import Home from "./Home.tsx";
-import Article from "./Article.tsx";
+import ArticleView from "./ArticleView.tsx";
 import Results from "./Results.tsx";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const router = createHashRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "results", element: <Results /> },
-      { path: "article", element: <Article /> },
+      { path: "article", element: <ArticleView /> },
       { path: "about", element: <About /> },
       { path: "disclosure", element: <Disclosure /> },
     ],
@@ -28,5 +28,5 @@ const router = createHashRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>
+  </StrictMode>,
 );

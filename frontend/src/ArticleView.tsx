@@ -1,12 +1,14 @@
 import { useSearchParams, useOutletContext } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
-import type { Article, AppCtx } from "./types";
+import type { Article, AppCtx, Pair } from "./types";
 import { useEffect, useState } from "react";
 import Rating from "./Rating";
+import ArticleCard from "./ArticleCard";
 
-function Article() {
+function ArticleView() {
   const defaultArticle: Article = {
+    id: 0,
     url: "",
     site: "",
     title: "",
@@ -20,19 +22,34 @@ function Article() {
 
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
-  const { articles, loading } = useOutletContext<AppCtx>();
+  const { articles, pairs, clusters, loading } = useOutletContext<AppCtx>();
   const [article, setArticle] = useState<Article>(defaultArticle);
+  const [mainlist, setMainlist] = useState<string[]>([]);
+  const [offlist, setOfflist] = useState<string[]>([]);
+  const [secondaryUrl, setSecondaryUrl] = useState<string>("");
+  const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
   const [meta, setMeta] = useState(false);
 
   useEffect(() => {
-    const target = articles[Number(query!)];
+    const target = articles.find((article) => article.id === Number(query!))!;
     setArticle(target);
+    const all_matches = pairs.filter(
+      (pair: Pair) => pair.source_url === article.url,
+    );
+    const relatedArticleInfo = clusters[target.cluster_id]
+      .map((url) => articles.find((article) => article.url === url))
+      .filter((a): a is Article => a !== undefined);
+    setRelatedArticles(relatedArticleInfo);
 
     return () => {};
-  }, [query]);
+  }, [query, secondaryUrl]);
 
   const handleMeta = () => {
     setMeta((m) => !m);
+  };
+
+  const handleSecondary = (url: string) => {
+    setSecondaryUrl(url);
   };
 
   return (
@@ -51,27 +68,7 @@ function Article() {
               >
                 i
               </button>
-              <div className="flex justify-center text-[3rem] text-ink-main">
-                {article.title}
-              </div>
-              <div className="text-accent-blue text-[1.5rem]">
-                News Outlet: {article.site}
-              </div>
-              <div className="flex gap-2 text-[1.5rem]">
-                <div className="text-accent-blue">Original article:</div>
-                <a
-                  className="text-accent-red underline"
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Link
-                </a>
-              </div>
-              <div className="text-accent-blue text-[1.5rem]">Article:</div>
-              <div className="text-ink-soft text-[1.5rem] text-justify overflow-y-auto no-scrollbar min-w-0">
-                {article.article}
-              </div>
+              <ArticleCard article={article} match_list={mainlist} />
             </div>
             <div
               className={`${meta ? "translate-x-0" : "translate-x-full"} flex flex-col items-center bg-paper-alt w-[50%] h-[calc(100vh-4rem)] transition-all duration-500 ease-in-out`}
@@ -89,4 +86,4 @@ function Article() {
   );
 }
 
-export default Article;
+export default ArticleView;
