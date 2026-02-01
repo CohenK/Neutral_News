@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Article } from "./types";
 
-function Preview({ article, index }: { article: Article; index: number }) {
+function PreviewCard({ article, index }: { article: Article; index: number }) {
   return (
     <div className="flex-col">
       <div className="text-accent-blue text-[2rem] underline">
@@ -21,4 +21,4 @@ function Preview({ article, index }: { article: Article; index: number }) {
   );
 }
 
-export default Preview;
+export default PreviewCard;

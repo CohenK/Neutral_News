@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useOutletContext } from "react-router-dom";
 import type { Article, AppCtx } from "./types";
-import Preview from "./Preview";
+import Preview from "./PreviewCard";
 import { Link } from "react-router-dom";
 
 function Results() {
@@ -11,7 +11,7 @@ function Results() {
   const [results, setResults] = useState<Article[]>([]);
 
   useEffect(() => {
-    const filtered = articles.filter(
+    const filtered = Object.values(articles).filter(
       (a: Article) =>
         a.title.toLowerCase().includes(query!.toLowerCase()) ||
         a.article.toLowerCase().includes(query!.toLowerCase()),

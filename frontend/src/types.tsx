@@ -1,5 +1,4 @@
 export type Article = {
-  id: number;
   url: string;
   site: string;
   title: string;
@@ -24,8 +23,9 @@ export type Pair = {
 export type Cluster = Record<string, string[]>;
 
 export type AppCtx = {
-  articles: Article[];
+  articles: Record<string, Article>;
   pairs: Pair[];
   clusters: Record<string, string[]>;
+  urlMap: Record<string, string>;
   loading: boolean;
 };

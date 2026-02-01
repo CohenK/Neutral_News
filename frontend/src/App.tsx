@@ -9,6 +9,7 @@ function App() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [pairs, setPairs] = useState<Pair[]>([]);
   const [clusters, setClusters] = useState<Cluster>({});
+  const [urlMap, setUrlMap] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,6 +42,12 @@ function App() {
           sessionStorage.setItem("articles", JSON.stringify(article_data));
           sessionStorage.setItem("pairs", JSON.stringify(pair_data));
           sessionStorage.setItem("clusters", JSON.stringify(cluster_data));
+
+          let url_map = {} as Record<string, string>;
+          Object.entries(article_data).forEach(([key, article]) => {
+            url_map[article.url] = key;
+          });
+          setUrlMap(url_map);
           return;
         }
         // cache hit
@@ -53,6 +60,11 @@ function App() {
           setArticles(cached_articles);
           setPairs(cached_pairs);
           setClusters(cached_clusters);
+          let url_map = {} as Record<string, string>;
+          Object.entries(cached_articles).forEach(([key, article]) => {
+            url_map[article.url] = key;
+          });
+          setUrlMap(url_map);
         } else {
           // if articles is empty, then pair and cluster data is useless so set empty for consistency
           setArticles([]);
@@ -88,7 +100,7 @@ function App() {
         {loading ? (
           <Loading />
         ) : (
-          <Outlet context={{ articles, pairs, clusters, loading }} />
+          <Outlet context={{ articles, pairs, clusters, urlMap, loading }} />
         )}
       </div>
     </div>
