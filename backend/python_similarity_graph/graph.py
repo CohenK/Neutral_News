@@ -131,6 +131,7 @@ class Graph():
         if p.exists():
             os.remove(p)
 
+        obj = {}
         for id in self._ids:
             data = self._id_to_data[id]
             url = data["url"]
@@ -148,8 +149,7 @@ class Graph():
             else:
                 site = "APNews"
 
-            obj = {
-                "id": self._id_to_int[url],
+            obj[int(self._id_to_int[url])] = {
                 "url": url,
                 "site": site,
                 "title": data["title"],
@@ -160,7 +160,7 @@ class Graph():
                 "cluster_id": self._id_to_cluster[id],
                 "article_keywords": self._article_keywords[url]
             }
-            append_to_json_array(p, obj)
+        p.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
     
     def compute_inferences(self):
         """ generate pairs of sentences across articles that have similar meaning for each cluster and also generate keywords for every article """
