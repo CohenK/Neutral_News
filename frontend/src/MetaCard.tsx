@@ -4,14 +4,12 @@ import type { Article } from "./types";
 
 function MetaCard({
   article,
-  offlist,
   meta,
   relatedArticles,
   urlMap,
   handleCompare,
 }: {
   article: Article;
-  offlist: string[];
   meta: boolean;
   relatedArticles: Article[];
   urlMap: Record<string, string>;

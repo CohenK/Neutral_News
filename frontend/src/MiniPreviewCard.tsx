@@ -15,7 +15,7 @@ function MiniPreviewCard({
     navigate(`/article?q=${encodeURIComponent(index)}`);
   };
   const buttonClass =
-    "border border-ink-soft rounded-md px-2 hover:bg-paper-main cursor-pointer hover:text-ink-main";
+    "text-[1rem] border border-ink-soft rounded-md px-2 hover:bg-paper-main cursor-pointer hover:text-ink-main";
   return (
     <div>
       <div className="text-[1.5rem] text-accent-blue">{article.title}</div>
