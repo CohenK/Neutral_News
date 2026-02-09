@@ -1,4 +1,5 @@
 export type Article = {
+  id: number;
   url: string;
   site: string;
   title: string;

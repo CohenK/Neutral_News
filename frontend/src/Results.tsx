@@ -36,7 +36,7 @@ function Results() {
         <ul className="space-y-7">
           {results.map((article: Article, index) => (
             <li key={index} className="font-bold">
-              <Preview article={article} index={index} />
+              <Preview article={article} index={article.id} />
             </li>
           ))}
         </ul>

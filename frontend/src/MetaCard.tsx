@@ -6,13 +6,11 @@ function MetaCard({
   article,
   meta,
   relatedArticles,
-  urlMap,
   handleCompare,
 }: {
   article: Article;
   meta: boolean;
   relatedArticles: Article[];
-  urlMap: Record<string, string>;
   handleCompare: (url: string) => void;
 }) {
   return (
@@ -32,11 +30,7 @@ function MetaCard({
           <ul className="space-y-5">
             {relatedArticles.map((article: Article, index) => (
               <li key={index}>
-                <MiniPreviewCard
-                  article={article}
-                  index={urlMap[article.url]}
-                  compare={handleCompare}
-                />
+                <MiniPreviewCard article={article} compare={handleCompare} />
               </li>
             ))}
           </ul>

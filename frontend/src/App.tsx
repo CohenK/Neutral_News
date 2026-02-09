@@ -6,10 +6,10 @@ import Navbar from "./Navbar";
 import Loading from "./Loading";
 
 function App() {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Record<string, Article>>({});
   const [pairs, setPairs] = useState<Pair[]>([]);
   const [clusters, setClusters] = useState<Cluster>({});
-  const [urlMap, setUrlMap] = useState<Record<string, string>>({});
+  const [urlMap, setUrlMap] = useState<Record<string, string>>({}); // url to article id map for ArticleView cluster articles
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +30,10 @@ function App() {
           if (!pair_file.ok) throw new Error(pair_file.statusText);
           if (!cluster_file.ok) throw new Error(cluster_file.statusText);
 
-          const article_data = (await article_file.json()) as Article[];
+          const article_data = (await article_file.json()) as Record<
+            string,
+            Article
+          >;
           const pair_data = (await pair_file.json()) as Pair[];
           const cluster_data = (await cluster_file.json()) as Cluster;
 
@@ -51,12 +54,25 @@ function App() {
           return;
         }
         // cache hit
-        const cached_articles = JSON.parse(raw_articles) as Article[];
+        const cached_articles = JSON.parse(raw_articles) as Record<
+          string,
+          Article
+        >;
         const cached_pairs = JSON.parse(raw_pairs!) as Pair[];
         const cached_clusters = JSON.parse(raw_clusters!) as Cluster;
         if (cancelled) return;
 
-        if (cached_articles && cached_articles.length > 0) {
+        if (Object.keys(cached_articles).length === 0) {
+          // if articles is empty, then pair and cluster data is useless so set empty for consistency
+          console.error("Failed to load articles, cache data is empty");
+          console.log("cached articles: ", cached_articles);
+          setArticles({});
+          setPairs([]);
+          setClusters({});
+          sessionStorage.removeItem("articles");
+          sessionStorage.removeItem("pairs");
+          sessionStorage.removeItem("clusters");
+        } else {
           setArticles(cached_articles);
           setPairs(cached_pairs);
           setClusters(cached_clusters);
@@ -65,23 +81,9 @@ function App() {
             url_map[article.url] = key;
           });
           setUrlMap(url_map);
-        } else {
-          // if articles is empty, then pair and cluster data is useless so set empty for consistency
-          setArticles([]);
-          setPairs([]);
-          setClusters({});
-          console.error(
-            "Failed to load articles, please try refreshing your browse",
-          );
         }
       } catch (err) {
-        console.error(
-          "Failed to load articles, please try refreshing your browse",
-          err,
-        );
-        sessionStorage.removeItem("articles");
-        sessionStorage.removeItem("pairs");
-        sessionStorage.removeItem("clusters");
+        console.error("Failed to load articles, error occured: ", err);
       } finally {
         if (!cancelled) setLoading(false);
       }

@@ -8,6 +8,7 @@ import CompareView from "./CompareView";
 
 function ArticleView() {
   const defaultArticle: Article = {
+    id: 0,
     url: "",
     site: "",
     title: "",
@@ -34,6 +35,7 @@ function ArticleView() {
   const [compare, setCompare] = useState<boolean>(false);
 
   useEffect(() => {
+    closeCompare();
     if (!query) return;
     const target = articles[query];
 
@@ -48,7 +50,7 @@ function ArticleView() {
     setRelatedArticles(relatedArticleInfo);
 
     return () => {};
-  }, [query]);
+  }, [query, articles, pairs, clusters, urlMap]);
 
   useEffect(() => {
     const id = urlMap[secondaryUrl];
@@ -56,11 +58,12 @@ function ArticleView() {
     const filtered = matches.filter(
       (match) => match.match_url === secondaryUrl,
     );
+    console.log("matches: ", filtered.length);
     const main = filtered.map((match) => match.source_sentence);
     const off = filtered.map((match) => match.match_sentence);
     setMainList(main);
     setOffList(off);
-  }, [secondaryUrl, compare]);
+  }, [query, secondaryUrl, matches, articles, urlMap]);
 
   const handleMeta = () => {
     setMeta((m) => !m);
@@ -78,6 +81,15 @@ function ArticleView() {
     setMainList([]);
     setOffList([]);
   };
+  const compareReady =
+    compare &&
+    offArticle !== undefined &&
+    mainList.length > 0 &&
+    offList.length > 0;
+
+  console.log(
+    `compareReady: ${compareReady}, mainlist length: ${mainList.length}, offlist length: ${offList.length}, offArticle: ${offArticle?.title}`,
+  );
 
   return (
     <>
@@ -85,7 +97,7 @@ function ArticleView() {
         <Loading />
       ) : (
         <div className="fixed">
-          <div className={`${compare ? "pointer-events-none" : ""} flex`}>
+          <div className={`${compareReady ? "pointer-events-none" : ""} flex`}>
             <div
               className={`${meta ? "max-w-[50%] translate-x-0" : "max-w-[75%] translate-x-[16.67%]"} relative flex flex-col bg-paper-main min-w-0 h-[calc(100vh-4rem)] overflow-hidden px-20 transition-all duration-500 ease-in-out`}
             >
@@ -104,14 +116,11 @@ function ArticleView() {
                 article={article}
                 meta={meta}
                 relatedArticles={relatedArticles}
-                urlMap={urlMap}
                 handleCompare={openCompare}
               />
             </div>
           </div>
-          <div
-            className={`${compare && offArticle !== undefined && mainList.length > 0 && offList.length > 0 ? "" : "hidden"}`}
-          >
+          {compareReady && (
             <CompareView
               mainArticle={article}
               offArticle={offArticle}
@@ -119,7 +128,7 @@ function ArticleView() {
               offList={offList}
               handleClose={closeCompare}
             />
-          </div>
+          )}
         </div>
       )}
     </>

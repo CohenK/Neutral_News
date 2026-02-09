@@ -3,16 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 function MiniPreviewCard({
   article,
-  index,
   compare,
 }: {
   article: Article;
-  index: string;
   compare: (articleID: string) => void;
 }) {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate(`/article?q=${encodeURIComponent(index)}`);
+    navigate(`/article?q=${encodeURIComponent(article.id)}`);
   };
   const buttonClass =
     "text-[1rem] border border-ink-soft rounded-md px-2 hover:bg-paper-main cursor-pointer hover:text-ink-main";
