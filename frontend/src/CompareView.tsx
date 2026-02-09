@@ -26,7 +26,7 @@ function CompareView({
     <div
       ref={modalRef}
       tabIndex={-1}
-      className="absolute flex justify-around items-center inset-0 z-50 bg-black/80 pointer-events-auto"
+      className="absolute flex items-around inset-0 z-50 bg-black/80 pointer-events-auto"
       onClick={handleClose}
       onKeyDown={(e) => {
         if (e.key === "Escape") {
@@ -41,19 +41,27 @@ function CompareView({
         ×
       </button>
 
-      <div className={compareClasses} onClick={(e) => e.stopPropagation()}>
-        <CompareCard
-          article={mainArticle}
-          matchList={mainList}
-          offList={offList}
-        />
-      </div>
-      <div className={compareClasses} onClick={(e) => e.stopPropagation()}>
-        <CompareCard
-          article={offArticle}
-          matchList={offList}
-          offList={mainList}
-        />
+      {mainList.length === 0 && (
+        <div className="bg-paper-main text-ink-soft text-[1.5rem] text-justify">
+          Our models were not able to find any sentence pairings
+        </div>
+      )}
+
+      <div className="flex justify-around items-center">
+        <div className={compareClasses} onClick={(e) => e.stopPropagation()}>
+          <CompareCard
+            article={mainArticle}
+            matchList={mainList}
+            offList={offList}
+          />
+        </div>
+        <div className={compareClasses} onClick={(e) => e.stopPropagation()}>
+          <CompareCard
+            article={offArticle}
+            matchList={offList}
+            offList={mainList}
+          />
+        </div>
       </div>
     </div>
   );

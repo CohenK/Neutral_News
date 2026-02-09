@@ -41,7 +41,8 @@ function ArticleView() {
 
     setArticle(target);
     const all_matches = pairs.filter(
-      (pair: Pair) => pair.source_url === target.url,
+      (pair: Pair) =>
+        pair.source_url === target.url || pair.match_url === target.url, // include uni-direciton pairs for filtering
     );
     setMatches(all_matches);
     const relatedArticleInfo = clusters[target.cluster_id]
@@ -55,12 +56,18 @@ function ArticleView() {
   useEffect(() => {
     const id = urlMap[secondaryUrl];
     setOffArticle(articles[id]);
-    const filtered = matches.filter(
-      (match) => match.match_url === secondaryUrl,
-    );
+    let filtered = matches.filter((match) => match.match_url === secondaryUrl);
+    let main: string[] = [];
+    let off: string[] = [];
+    if (filtered.length > 0) {
+      main = filtered.map((match) => match.source_sentence);
+      off = filtered.map((match) => match.match_sentence);
+    } else {
+      filtered = matches.filter((match) => match.match_url === article.url);
+      main = filtered.map((match) => match.match_sentence);
+      off = filtered.map((match) => match.source_sentence);
+    }
     console.log("matches: ", filtered.length);
-    const main = filtered.map((match) => match.source_sentence);
-    const off = filtered.map((match) => match.match_sentence);
     setMainList(main);
     setOffList(off);
   }, [query, secondaryUrl, matches, articles, urlMap]);
@@ -81,11 +88,7 @@ function ArticleView() {
     setMainList([]);
     setOffList([]);
   };
-  const compareReady =
-    compare &&
-    offArticle !== undefined &&
-    mainList.length > 0 &&
-    offList.length > 0;
+  const compareReady = compare && offArticle !== undefined;
 
   console.log(
     `compareReady: ${compareReady}, mainlist length: ${mainList.length}, offlist length: ${offList.length}, offArticle: ${offArticle?.title}`,
