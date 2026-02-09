@@ -132,6 +132,7 @@ class Graph():
             os.remove(p)
 
         obj = {}
+        count = 0
         for id in self._ids:
             data = self._id_to_data[id]
             url = data["url"]
@@ -150,6 +151,7 @@ class Graph():
                 site = "APNews"
 
             obj[int(self._id_to_int[url])] = {
+                "id": count,
                 "url": url,
                 "site": site,
                 "title": data["title"],
@@ -160,6 +162,7 @@ class Graph():
                 "cluster_id": self._id_to_cluster[id],
                 "article_keywords": self._article_keywords[url]
             }
+            count += 1
         p.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
     
     def compute_inferences(self):
